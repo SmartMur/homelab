@@ -1,0 +1,41 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/en/configs/services
+
+- My First Group:
+    - My First Service:
+        href: http://localhost/
+        description: Homepage is awesome
+
+    - Traefik:
+        icon: traefik.png
+        href: "http://traefik.smartmur.lab"
+        description: Reverse Proxy
+        server: my-docker # The docker server that was configured
+        container: traefik # The name of the container you'd like to connect
+        widget:
+          type: traefik
+          url: https://traefik.smartmur.lab
+          username: admin
+          password: CHANGE_ME_TRAEFIK_DASHBOARD_PASSWORD
+
+    - PiHole:
+        icon: pi-hole.png
+        href: "http://pihole.smartmur.lab"
+        description: DNS Ad Blocker
+        server: my-docker # The docker server that was configured
+        container: pihole # The name of the container you'd like to connect
+        widget:
+          type: pihole
+          url: http://192.168.8.2
+          key: CHANGE_ME_PIHOLE_API_KEY
+
+- My Second Group:
+    - My Second Service:
+        href: http://localhost/
+        description: Homepage is the best
+
+- My Third Group:
+    - My Third Service:
+        href: http://localhost/
+        description: Homepage is 😎
