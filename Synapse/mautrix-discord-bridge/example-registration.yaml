@@ -1,0 +1,14 @@
+id: discord
+url: http://<IP of DiscordBot>:29334
+as_token: CHANGE_ME_mautrix_as_token
+hs_token: CHANGE_ME_mautrix_hs_token
+sender_localpart: zHypwcFgaEKamUdbGyBgvibKpW
+rate_limited: false
+namespaces:
+    users:
+        - regex: ^@discordbot:matrix\.smartmur\.co\.uk$
+          exclusive: true
+        - regex: ^@discord_.*:matrix\.smartmur\.co\.uk$
+          exclusive: true
+de.sorunome.msc2409.push_ephemeral: true
+push_ephemeral: true

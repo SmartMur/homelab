@@ -1,0 +1,73 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+*.env
+
+# Configuration files with sensitive data
+homeserver.yaml
+synapse/config/
+Synapse/config/
+
+# Private keys and certificates
+*.key
+*.pem
+*.crt
+*.csr
+
+# Secrets directories
+secrets/
+.secrets/
+config/secrets/
+
+# Database files and backups
+*.db
+*.sqlite
+*.sqlite3
+*.backup
+*.bak
+
+# Private configs and overrides
+local.conf
+local.yml
+local.yaml
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Logs and runtime files
+*.log
+logs/
+log/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python and Node caches
+__pycache__/
+node_modules/
+.npm
+.cache
+
+# Build outputs
+dist/
+build/
+out/
+
+# Git and VCS
+.git/
+.gitkeep
+.github/workflows/*.bak
+
+# Docker files (optional - keep if needed for reference)
+# docker-compose.override.yml
+
+# Backup and temporary files
+*.tmp
+*.temp
+*backup*
+.temp/
