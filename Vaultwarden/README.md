@@ -1,52 +1,49 @@
-# 🔑 Vaultwarden - Self-Hosted Password Manager
+# Vaultwarden - Self-Hosted Password Manager
 
-> **Difficulty:** 🟢 Beginner  
-> **RAM Required:** 256MB  
-> **Deployment Time:** 10-15 minutes
 
-## 📖 What is Vaultwarden?
+## What is Vaultwarden?
 
 Vaultwarden is an unofficial Bitwarden server implementation written in Rust. It's compatible with Bitwarden's official clients and provides password management for free.
 
-**Think of it as:**
+Basically:
 - Your own personal 1Password/LastPass
 - A secure vault for all passwords
 - Bitwarden Premium features for free
 
-**Benefits:**
-- 🔒 All passwords in one encrypted vault
-- 📱 Access from phone, laptop, browser
-- 🔄 Auto-sync across devices
-- 💾 Self-hosted = you control the data
-- 🆓 Free (no subscription needed)
-- 🔐 Strong encryption (AES-256)
+What it does:
+- All passwords in one encrypted vault
+- Access from phone, laptop, browser
+- Auto-sync across devices
+- Self-hosted = you control the data
+- Free (no subscription needed)
+- Strong encryption (AES-256)
 
-## ✅ Why You Need This
+## Why You Need This
 
 **Without a password manager:**
 ```
 Gmail: MyPassword123
-Facebook: MyPassword123  ← Same password = DANGEROUS!
-Bank: Password456       ← Weak password = VULNERABLE!
+Facebook: MyPassword123 ← Same password = DANGEROUS!
+Bank: Password456 ← Weak password = VULNERABLE!
 Netflix: Forgot password... again
 ```
 
 **With Vaultwarden:**
 ```
-Gmail: k9$mP#xL2@qR8nW  ← Unique, strong
-Facebook: Q7!vN@4tY$pL1  ← Different per site
-Bank: X3%jK&9rM#2dS8   ← Maximum security
+Gmail: k9$mP#xL2@qR8nW ← Unique, strong
+Facebook: Q7!vN@4tY$pL1 ← Different per site
+Bank: X3%jK&9rM#2dS8 ← Maximum security
 Netflix: Auto-filled from vault
 ```
 
 **Security benefits:**
-- ✅ Never reuse passwords
-- ✅ Generate strong, random passwords
-- ✅ Auto-fill (no typing = no keyloggers)
-- ✅ Know if passwords leaked in breaches
-- ✅ Share passwords securely (family/team)
+- Never reuse passwords
+- Generate strong, random passwords
+- Auto-fill (no typing = no keyloggers)
+- Know if passwords leaked in breaches
+- Share passwords securely (family/team)
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### Required
 - [ ] Docker & Docker Compose installed
@@ -57,9 +54,9 @@ Netflix: Auto-filled from vault
 - [ ] Authelia deployed (add 2FA to vault access)
 - [ ] Backup strategy planned
 
-## 🚀 Quick Start
+## Quick Start
 
-### Step 1: Deploy Vaultwarden
+### 1. Deploy Vaultwarden
 
 ```bash
 # Navigate to directory
@@ -75,15 +72,15 @@ docker ps | grep vaultwarden
 docker compose logs -f
 ```
 
-### Step 2: Access Web Vault
+### 2. Access Web Vault
 
 1. Open browser
 2. Go to: `https://vault.yourdomain.com` (or configured URL)
 3. Click "Create Account"
 4. Enter email and master password
-5. **IMPORTANT:** Master password is NOT recoverable! Write it down!
+5. Important: Master password is NOT recoverable! Write it down!
 
-### Step 3: Install Browser Extension
+### 3. Install Browser Extension
 
 **Chrome/Edge/Brave:**
 1. Visit Chrome Web Store
@@ -99,7 +96,7 @@ docker compose logs -f
 3. Install
 4. Configure same as above
 
-### Step 4: Install Mobile App
+### 4. Install Mobile App
 
 **iOS/Android:**
 1. Download "Bitwarden" from App Store/Play Store
@@ -108,76 +105,76 @@ docker compose logs -f
 4. Server URL: `https://vault.yourdomain.com`
 5. Log in
 
-### Step 5: Add Your First Password
+### 5. Add Your First Password
 
 1. Click "+" in web vault or extension
 2. Choose type: Login
 3. Enter:
-   - Name: Gmail
-   - Username: your-email@gmail.com
-   - Password: (or generate random)
-   - URL: https://gmail.com
+ - Name: Gmail
+ - Username: your-email@gmail.com
+ - Password: (or generate random)
+ - URL: https://gmail.com
 4. Save
 
-**🎉 Success!** You now have a self-hosted password manager!
+Done. You now have a self-hosted password manager!
 
-## 📁 File Structure
+## File Structure
 
 ```
 Vaultwarden/
-├── docker-compose.yaml    # Main configuration
-├── data/                  # Vault data (auto-created)
-│   ├── db.sqlite3        # Database
-│   ├── attachments/      # File attachments
-│   └── sends/            # Bitwarden Send files
-└── README.md             # This file
+ docker-compose.yaml # Main configuration
+ data/ # Vault data (auto-created)
+ db.sqlite3 # Database
+ attachments/ # File attachments
+ sends/ # Bitwarden Send files
+ README.md # This file
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### docker-compose.yml
 
 ```yaml
 services:
-  vaultwarden:
-    image: vaultwarden/server:latest
-    container_name: vaultwarden
-    restart: unless-stopped
-    
-    environment:
-      # Domain for emails and links
-      DOMAIN: "https://vault.yourdomain.com"
-      
-      # Disable registration after creating account
-      SIGNUPS_ALLOWED: "true"  # Change to "false" after setup
-      
-      # Email configuration (optional but recommended)
-      SMTP_HOST: smtp.gmail.com
-      SMTP_FROM: your-email@gmail.com
-      SMTP_PORT: 587
-      SMTP_SECURITY: starttls
-      SMTP_USERNAME: your-email@gmail.com
-      SMTP_PASSWORD: your-app-password
-      
-      # Admin token (for admin panel)
-      ADMIN_TOKEN: "generate-random-token"
-    
-    volumes:
-      - ./data:/data
-    
-    labels:
-      # Traefik labels
-      - "traefik.enable=true"
-      - "traefik.http.routers.vaultwarden.rule=Host(`vault.${DOMAIN}`)"
-      - "traefik.http.routers.vaultwarden.entrypoints=websecure"
-      - "traefik.http.services.vaultwarden.loadbalancer.server.port=80"
-    
-    networks:
-      - traefik
+ vaultwarden:
+ image: vaultwarden/server:latest
+ container_name: vaultwarden
+ restart: unless-stopped
+ 
+ environment:
+ # Domain for emails and links
+ DOMAIN: "https://vault.yourdomain.com"
+ 
+ # Disable registration after creating account
+ SIGNUPS_ALLOWED: "true" # Change to "false" after setup
+ 
+ # Email configuration (optional but recommended)
+ SMTP_HOST: smtp.gmail.com
+ SMTP_FROM: your-email@gmail.com
+ SMTP_PORT: 587
+ SMTP_SECURITY: starttls
+ SMTP_USERNAME: your-email@gmail.com
+ SMTP_PASSWORD: your-app-password
+ 
+ # Admin token (for admin panel)
+ ADMIN_TOKEN: "generate-random-token"
+ 
+ volumes:
+ - ./data:/data
+ 
+ labels:
+ # Traefik labels
+ - "traefik.enable=true"
+ - "traefik.http.routers.vaultwarden.rule=Host(`vault.${DOMAIN}`)"
+ - "traefik.http.routers.vaultwarden.entrypoints=websecure"
+ - "traefik.http.services.vaultwarden.loadbalancer.server.port=80"
+ 
+ networks:
+ - traefik
 
 networks:
-  traefik:
-    external: true
+ traefik:
+ external: true
 ```
 
 ### Important Settings
@@ -199,7 +196,7 @@ Enables password reset emails (highly recommended):
 - Use Gmail App Password (not regular password)
 - Or use any SMTP provider
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### 1. Strong Master Password
 
@@ -227,7 +224,7 @@ Summer2024
 
 ```yaml
 environment:
-  SIGNUPS_ALLOWED: "false"  # No one else can register
+ SIGNUPS_ALLOWED: "false" # No one else can register
 ```
 
 Restart container:
@@ -241,7 +238,7 @@ Add 2FA requirement in docker-compose.yml:
 
 ```yaml
 labels:
-  - "traefik.http.routers.vaultwarden.middlewares=authelia@docker"
+ - "traefik.http.routers.vaultwarden.middlewares=authelia@docker"
 ```
 
 Now Vaultwarden requires 2FA login!
@@ -253,9 +250,9 @@ Even without Authelia, enable 2FA in Vaultwarden:
 1. Web Vault → Settings
 2. Two-step Login
 3. Choose method:
-   - Authenticator App (free)
-   - Email (free)
-   - YubiKey (if you have one)
+ - Authenticator App (free)
+ - Email (free)
+ - YubiKey (if you have one)
 4. Follow setup wizard
 5. Save recovery codes!
 
@@ -293,7 +290,7 @@ Check logs regularly:
 docker compose logs vaultwarden | grep -i "failed\|invalid"
 ```
 
-## 🎨 Advanced Features
+## Hard Features
 
 ### Organizations (Password Sharing)
 
@@ -347,11 +344,11 @@ Grant access if something happens to you:
 - Spouse accessing accounts if you're unavailable
 - Recovery of critical accounts
 
-## 🔄 Migration from Other Managers
+## Migration from Other Managers
 
 ### From LastPass
 
-1. LastPass → More Options → Advanced → Export
+1. LastPass → More Options → Hard → Export
 2. Save CSV file
 3. Vaultwarden → Tools → Import Data
 4. Select "LastPass (csv)"
@@ -375,7 +372,7 @@ Grant access if something happens to you:
 4. Upload
 5. Delete CSV securely
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: Can't Access Web Vault
 
@@ -447,7 +444,7 @@ curl https://vault.yourdomain.com
 - Verify email address
 - Try on different device (verifies server issue)
 
-## 📊 Monitoring & Maintenance
+## Monitoring & Maintenance
 
 ### Admin Panel
 
@@ -485,7 +482,7 @@ ls -lh data/db.sqlite3
 sqlite3 data/db.sqlite3 "VACUUM;"
 ```
 
-## 🔄 Updating
+## Updating
 
 ```bash
 # Pull latest image
@@ -503,7 +500,7 @@ docker logs vaultwarden | head
 - Check release notes for breaking changes
 - Test in development first (if critical)
 
-## 💡 Tips & Tricks
+## Tips & Tricks
 
 ### 1. Generate Strong Passwords
 
@@ -544,7 +541,7 @@ Configure extension behavior:
 
 Create folders:
 - Personal
-- Work  
+- Work 
 - Shared
 - Old/Archived
 
@@ -558,7 +555,7 @@ Extension can:
 - Generate passwords on signup forms
 - Warn about reused passwords
 
-## 📚 Related Services
+## Related Services
 
 **Deploy these next:**
 1. **Authelia** - Add 2FA protection to Vaultwarden
@@ -570,14 +567,14 @@ Extension can:
 - Any service needing passwords
 - Organization password sharing
 
-## 📖 Additional Resources
+## Additional Resources
 
 - [Official Vaultwarden Wiki](https://github.com/dani-garcia/vaultwarden/wiki)
 - [Bitwarden Help Center](https://bitwarden.com/help/) (compatible)
 - [r/Bitwarden](https://reddit.com/r/Bitwarden)
 - [r/selfhosted](https://reddit.com/r/selfhosted)
 
-## 🆘 Getting Help
+## Getting Help
 
 **Before asking for help:**
 1. Check logs: `docker compose logs vaultwarden`
@@ -596,7 +593,7 @@ Extension can:
 - Vaultwarden GitHub Discussions
 - r/Bitwarden
 
-## ✅ Success Checklist
+## Success Checklist
 
 - [ ] Vaultwarden accessible at https://vault.yourdomain.com
 - [ ] Account created with strong master password
@@ -618,4 +615,4 @@ Extension can:
 4. Set up automated backups
 5. Share passwords with family via Organizations
 
-**Congratulations! You now have complete control over your passwords! 🔑**
+**Congratulations! You now have complete control over your passwords! **
