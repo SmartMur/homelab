@@ -254,12 +254,12 @@ dns_config:
   # so far only A-records are supported (on the tailscale side)
   # See https://github.com/juanfont/headscale/blob/main/docs/dns-records.md#Limitations
   # extra_records:
-  #   - name: "grafana.myvpn.example.com"
+  #   - name: "grafana.vpn.smartmur.lab"
   #     type: "A"
   #     value: "100.64.0.3"
   #
   #   # you can also put it in one line
-  #   - { name: "prometheus.myvpn.example.com", type: "A", value: "100.64.0.3" }
+  #   - { name: "prometheus.vpn.smartmur.lab", type: "A", value: "100.64.0.3" }
 
   # Whether to use [MagicDNS](https://tailscale.com/kb/1081/magicdns/).
   # Only works if there is at least a nameserver defined.
@@ -267,9 +267,9 @@ dns_config:
 
   # DEPRECATED
   # Use the username as part of the DNS name for nodes, with this option enabled:
-  # node1.username.example.com
+  # node1.username.smartmur.lab
   # while when this is disabled:
-  # node1.example.com
+  # node1.smartmur.lab
   # This is a legacy option as Headscale has have this wrongly implemented
   # while in upstream Tailscale, the username is not included.
   use_username_in_magic_dns: false
@@ -277,8 +277,8 @@ dns_config:
   # Defines the base domain to create the hostnames for MagicDNS.
   # `base_domain` must be a FQDNs, without the trailing dot.
   # The FQDN of the hosts will be
-  # `hostname.user.base_domain` (e.g., _myhost.myuser.example.com_).
-  base_domain: example.com
+  # `hostname.user.base_domain` (e.g., _myhost.myuser.smartmur.lab_).
+  base_domain: smartmur.lab
 
 # Unix socket used for the CLI to connect without authentication
 # Note: for production you will want to set this to something like:
@@ -316,23 +316,23 @@ unix_socket_permission: "0770"
 #
 #   scope: ["openid", "profile", "email", "custom"]
 #   extra_params:
-#     domain_hint: example.com
+#     domain_hint: smartmur.lab
 #
 #   # List allowed principal domains and/or users. If an authenticated user's domain is not in this list, the
 #   # authentication request will be rejected.
 #
 #   allowed_domains:
-#     - example.com
+#     - smartmur.lab
 #   # Note: Groups from keycloak have a leading '/'
 #   allowed_groups:
 #     - /headscale
 #   allowed_users:
-#     - alice@example.com
+#     - alice@smartmur.lab
 #
 #   # If `strip_email_domain` is set to `true`, the domain part of the username email address will be removed.
-#   # This will transform `first-name.last-name@example.com` to the user `first-name.last-name`
+#   # This will transform `first-name.last-name@smartmur.lab` to the user `first-name.last-name`
 #   # If `strip_email_domain` is set to `false` the domain part will NOT be removed resulting to the following
-#   user: `first-name.last-name.example.com`
+#   user: `first-name.last-name.smartmur.lab`
 #
 #   strip_email_domain: true
 

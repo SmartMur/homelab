@@ -27,7 +27,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`unifi.yourdomain.com`) # change to your domain
+    - match: Host(`unifi.smartmur.lab`)
       kind: Rule
       services:
         - name: unifi-tcp

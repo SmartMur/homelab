@@ -10,12 +10,12 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`www.wg-easy.yourdomain.com`) # change me 
+    - match: Host(`www.wg-easy.smartmur.lab`) # change me 
       kind: Rule
       services:
         - name: wg-easy-web
           port: 51821
-    - match: Host(`wg-easy.yourdomain.com`) # change me
+    - match: Host(`wg-easy.smartmur.lab`) # change me
       kind: Rule
       services:
         - name: wg-easy-web

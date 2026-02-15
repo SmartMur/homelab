@@ -1,38 +1,40 @@
-version: "3"
-secrets:
-  access_token:
-    file: access_token
+version: "3.8"
+
 services:
   watchtower:
-    image: containrrr/watchtower
+    image: containrrr/watchtower:latest
+    container_name: watchtower
     restart: unless-stopped
-    secrets:
-      - access_token
+    env_file:
+      - .env
     environment:
-      - TZ=Europe/London
-      # remove old images after update (useful for saving space)
+      - TZ=${TZ:-UTC}
+      # Remove old images after update (useful for saving space)
       - WATCHTOWER_CLEANUP=true
-      # the below will ignore labels set. It is worth checking out labels as that can be a more scalabe solution (automatic)
-      # - WATCHTOWER_DISABLE_CONTAINERS=traefik crowdsec bouncer-traefik deconz frigate home-assistant homeassistant-db
-      # the docker host can also be remote by specifying tcp
-      # - DOCKER_HOST=tcp://hostname:port
-      # how frequently to check for images (default is 24 hours)
-      # - WATCHTOWER_POLL_INTERVAL=86400
-      # choose whether to restart the containers after updates
-      # - WATCHTOWER_INCLUDE_RESTARTING=true
-      # choose whether to update stopped and exited containers
-      # - WATCHTOWER_INCLUDE_STOPPED=true
-      # this will start containers that were stopped or exited if they are updated
-      # - WATCHTOWER_REVIVE_STOPPED=true
-      # watchtower can behave like DIUN by only notifying, and not updating
-      # - WATCHTOWER_MONITOR_ONLY=true
-      # you can tell watchtower to do updates and restarts one by one - can be helpful
+      # Rolling restart - updates containers one by one
       - WATCHTOWER_ROLLING_RESTART=true
-
-      - WATCHTOWER_NOTIFICATIONS=gotify
-      - WATCHTOWER_NOTIFICATION_GOTIFY_URL=https://gotify.smartmur.lab
-      - WATCHTOWER_NOTIFICATION_GOTIFY_TOKEN=/run/secrets/access_token
+      # Schedule (cron format) - default: daily at 4am
+      - WATCHTOWER_SCHEDULE=${WATCHTOWER_SCHEDULE:-0 0 4 * * *}
+      # HTTP API configuration
+      - WATCHTOWER_HTTP_API_TOKEN=${WATCHTOWER_HTTP_API_TOKEN}
+      - WATCHTOWER_HTTP_API_UPDATE=true
+      # Notification settings
+      - WATCHTOWER_NOTIFICATIONS=${WATCHTOWER_NOTIFICATIONS:-}
+      - WATCHTOWER_NOTIFICATION_URL=${WATCHTOWER_NOTIFICATION_URL:-}
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    #  - /root/.docker/config.json:/config.json - Enable this when using a custom repo
-    command: --interval 30 # change this interval to whatever suits you
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # - /root/.docker/config.json:/config.json:ro  # Enable for custom registry auth
+    security_opt:
+      - no-new-privileges:true
+    # Uncomment to enable HTTP API (for manual triggers)
+    # ports:
+    #   - "8080:8080"
+
+# Configuration Options (set in .env or uncomment here):
+# - WATCHTOWER_POLL_INTERVAL=86400           # Check interval in seconds (default: 24h)
+# - WATCHTOWER_DISABLE_CONTAINERS=container1,container2  # Skip specific containers
+# - WATCHTOWER_INCLUDE_RESTARTING=true       # Update restarting containers
+# - WATCHTOWER_INCLUDE_STOPPED=true          # Update stopped containers
+# - WATCHTOWER_REVIVE_STOPPED=true           # Start updated stopped containers
+# - WATCHTOWER_MONITOR_ONLY=true             # Only notify, don't update
+# - DOCKER_HOST=tcp://hostname:port          # Remote Docker host

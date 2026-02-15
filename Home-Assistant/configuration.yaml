@@ -116,13 +116,13 @@ notify:
     server: smtp.gmail.com
     port: 587
     timeout: 15
-    sender: jim@smartmur.lab
+    sender: !secret smtp_sender
     encryption: starttls
-    username: jim@smartmur.lab
-    password: mypassword # or use secret file !secret smtp_password
+    username: !secret smtp_username
+    password: !secret smtp_password
     recipient:
-      - jim@smartmur.lab
+      - !secret smtp_recipient
     sender_name: Home Assistant Notification
 
 recorder:
-  db_url: postgresql://homeassistant_user:CHANGE_ME_POSTGRES_PASSWORD@homeassistant-db/homeassistant-db
+  db_url: !secret db_url

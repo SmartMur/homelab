@@ -1,0 +1,5 @@
+# Cloudflare API Token
+# Generate at: https://dash.cloudflare.com/profile/api-tokens
+# Required permissions: Zone:DNS:Edit for all zones or specific zone
+
+your_cloudflare_dns_api_token_here

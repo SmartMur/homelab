@@ -1,12 +1,12 @@
 # Homeserver details.
 homeserver:
     # The address that this appservice can use to connect to the homeserver.
-    address: https://matrix.example.com
+    address: https://matrix.smartmur.lab
     # Publicly accessible base URL for media, used for avatars in relay mode.
     # If not set, the connection address above will be used.
     public_address: null
     # The domain of the homeserver (also known as server_name, used for MXIDs, etc).
-    domain: example.com
+    domain: smartmur.lab
 
     # What software is the homeserver running?
     # Standard Matrix homeservers like Synapse, Dendrite and Conduit should just use "standard" here.
@@ -198,7 +198,7 @@ bridge:
             fps: 25 # only for webm, webp and gif (2, 5, 10, 20 or 25 recommended)
     # Servers to always allow double puppeting from
     double_puppet_server_map:
-        example.com: https://example.com
+        smartmur.lab: https://smartmur.lab
     # Allow using double puppeting from any server with a valid client .well-known file.
     double_puppet_allow_discovery: false
     # Shared secrets for https://github.com/devture/matrix-synapse-shared-secret-auth
@@ -207,7 +207,7 @@ bridge:
     # instead of users having to find an access token and run `login-matrix`
     # manually.
     login_shared_secret_map:
-        example.com: foobar
+        smartmur.lab: foobar
 
     # The prefix for commands. Only required in non-management rooms.
     command_prefix: '!discord'
@@ -344,8 +344,8 @@ bridge:
     #     mxid - Specific user
     permissions:
         "*": relay
-        "example.com": user
-        "@admin:example.com": admin
+        "smartmur.lab": user
+        "@admin:smartmur.lab": admin
 
 # Logging config. See https://github.com/tulir/zeroconfig for details.
 logging:

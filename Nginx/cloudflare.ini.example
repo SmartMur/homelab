@@ -1,0 +1,8 @@
+# Cloudflare API credentials used by Certbot
+# Copy this file to cloudflare.ini and update with your token
+# NEVER commit cloudflare.ini to git!
+
+# How to generate API token:
+# https://developers.cloudflare.com/api/tokens/create
+
+dns_cloudflare_api_token = CHANGE_ME_YOUR_CLOUDFLARE_API_TOKEN

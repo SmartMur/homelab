@@ -25,18 +25,18 @@ services:
         environment:
             - TZ=Europe/London
             - PLEX_CLAIM=claim-w9VAXV8FTCZcnxGSLQTQ # get this from plex.tv/claim
-            - ADVERTISE_IP=https://plex.yourdomain.com:443 #change me
+            - ADVERTISE_IP=https://plex.smartmur.lab:443 #change me
             - ALLOWED_NETWORKS=192.168.0.0/16 # place trusted network ranges here
         networks:
           proxy:
         labels:
           - "traefik.enable=true"
           - "traefik.http.routers.plex.entrypoints=http"
-          - "traefik.http.routers.plex.rule=Host(`plex.yourdomain.com`)" # change me
+          - "traefik.http.routers.plex.rule=Host(`plex.smartmur.lab`)" # change me
           - "traefik.http.middlewares.plex-https-redirect.redirectscheme.scheme=https"
           - "traefik.http.routers.plex.middlewares=plex-https-redirect"
           - "traefik.http.routers.plex-secure.entrypoints=https"
-          - "traefik.http.routers.plex-secure.rule=Host(`plex.yourdomain.com`)" #change me
+          - "traefik.http.routers.plex-secure.rule=Host(`plex.smartmur.lab`)" #change me
           - "traefik.http.routers.plex-secure.tls=true"
           - "traefik.http.routers.plex-secure.service=plex"
           - "traefik.http.services.plex.loadbalancer.server.port=32400"

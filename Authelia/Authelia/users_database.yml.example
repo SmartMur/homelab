@@ -1,0 +1,29 @@
+---
+###############################################################
+#                         Users Database                      #
+###############################################################
+
+# This file can be used if you do not have an LDAP set up.
+# SECURITY: This is an EXAMPLE file. Copy to users_database.yml and customize.
+# Generate password hash with: docker run authelia/authelia:latest authelia crypto hash generate argon2 --password 'your-password'
+
+# List of users
+users:
+  admin:
+    disabled: false
+    displayname: "Administrator"
+    # Password hash - CHANGE THIS! Generate with command above
+    password: "$argon2id$v=19$m=65536,t=3,p=4$CHANGE_ME_GENERATE_NEW_HASH"
+    email: admin@smartmur.lab
+    groups:
+      - admins
+      - dev
+
+  # user:
+  #   disabled: false
+  #   displayname: "Regular User"
+  #   password: "$argon2id$v=19$m=65536,t=3,p=4$CHANGE_ME_GENERATE_NEW_HASH"
+  #   email: user@smartmur.lab
+  #   groups:
+  #     - dev
+...

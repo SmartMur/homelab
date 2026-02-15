@@ -21,11 +21,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.code-server.entrypoints=http"
-      - "traefik.http.routers.code-server.rule=Host(`code-server.yourdomain.com`)"
+      - "traefik.http.routers.code-server.rule=Host(`code-server.smartmur.lab`)"
       - "traefik.http.middlewares.code-server-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.code-server.middlewares=code-server-https-redirect"
       - "traefik.http.routers.code-server-secure.entrypoints=https"
-      - "traefik.http.routers.code-server-secure.rule=Host(`code-server.yourdomain.com`)"
+      - "traefik.http.routers.code-server-secure.rule=Host(`code-server.smartmur.lab`)"
       - "traefik.http.routers.code-server-secure.tls=true"
       - "traefik.http.routers.code-server-secure.service=code-server"
       - "traefik.http.services.code-server.loadbalancer.server.port=8443"

@@ -1,19 +1,58 @@
+# ========================================
+# SECURITY: NEVER COMMIT THESE FILES
+# ========================================
+
 # Environment variables and secrets
 .env
 .env.local
 .env.*.local
 *.env
+!*.env.example
+!.env.example
+
+# Explicit secret files
+**/password
+!**/password.example
+**/access_token
+**/cf-token
+**/api-token
+**/credentials.yaml
+!**/credentials.yaml.example
+**/users_database.yml
+!**/users_database.yml.example
+**/configuration.yml
+!**/configuration.yml.example
+**/users
+!**/users.example
+
+# Ansible secrets (use ansible-vault instead)
+Ansible/Playbooks/Secrets-Variables/*
+!Ansible/Playbooks/Secrets-Variables/.gitkeep
+!Ansible/Playbooks/Secrets-Variables/README.md
+!Ansible/Playbooks/Secrets-Variables/*.example
+
+# Authelia specific
+**/authelia/configuration.yml
+**/authelia/users_database.yml
+!**/authelia/*.example
 
 # Configuration files with sensitive data
 homeserver.yaml
+!homeserver.yaml.example
 synapse/config/
 Synapse/config/
+**/config.yaml
+!**/config.yaml.example
 
 # Private keys and certificates
 *.key
 *.pem
 *.crt
 *.csr
+*.p12
+*.pfx
+acme.json
+!acme.json.example
 
 # Secrets directories
 secrets/
@@ -63,11 +102,17 @@ out/
 .gitkeep
 .github/workflows/*.bak
 
-# Docker files (optional - keep if needed for reference)
-# docker-compose.override.yml
+# Temporary files created by RovoDev
+tmp_rovodev_*
 
 # Backup and temporary files
 *.tmp
 *.temp
 *backup*
 .temp/
+
+# Cloud provider credentials
+.aws/
+.gcp/
+.azure/
+Home-Assistant/secrets.yaml

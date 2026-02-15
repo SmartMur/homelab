@@ -1,0 +1,52 @@
+# Proxmox API Configuration
+proxmox_api_url      = "https://192.168.100.100:8006/api2/json"
+proxmox_token_id     = "terraform@pam!terraform"
+proxmox_token_secret = "your-api-token-secret-here"
+proxmox_tls_insecure = true
+
+# Proxmox Cluster Configuration
+proxmox_nodes      = ["alpha", "pve"]
+proxmox_storage    = "local-lvm"
+proxmox_storage_iso = "local"
+
+# VM Template (must be cloud-init enabled)
+vm_template_id = 9000
+
+# VM Sizing
+vm_count      = 2
+vm_cpu        = 4
+vm_memory     = 4096
+vm_disk_size  = 50
+
+# Network Configuration
+vm_bridge      = "vmbr0"
+vm_vlan_tag    = 0
+vm_ip_type     = "dhcp"  # or "static"
+vm_ip_subnet   = "192.168.1.0/24"
+vm_ip_gateway  = "192.168.1.1"
+vm_dns_servers = ["8.8.8.8", "8.8.4.4"]
+
+# SSH Configuration
+vm_ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC3Lzk7tPsuwpM/eY/byWkRLCHzwsTpZbWjhdZGjIQMgYyLjVFgHLuua677xatB7ggnTUngl0CTSgpTacuTOYV4QcxBGPfoqnRjYd84sfU0wR7sdYu/5rN+ZodTPzotRszd4pQb9kdxFQ5ntXCsB4PkvXcOSj8zN/J0l76nKWW970xOjLOGl3QMGtW/KLPfI6InkMkWmfgoT3jnnsZYz281Zou+SURIN/IzVcU5qTCtiHkZ9+XDT2tSygoDpnQOWYZ/P6NfHhHDv0cgdH+vHlai/ENl5bPC147khsecK7vIYaPv5j23Y5RTEYBbXJUPkJSs/mdj6AqXyFGVICtL7hElUsY1bn4AjhyawhbX7byC7Zv41GaNUdHhXvcHMCYgxTAyTNyUW3lrPlu9/VYTX2oNcy/jmc8KPGrOy8T6KNWnbdSp6qr4ov6mAGzmKhN9F0N0Ymzb/VgjogRPS2TWJs6JKTGstLpldFBE+HlipP0QGEeG1e2pYSvkNtWmEIW1OY/GaLKQCKHDSfUSp1/YxPQ97ctXdOOZec5dVa6BSEN1QkiJ7tH9WBd++sSd9JZqZY32g1BjbYYqLaJLObjDm8uAfsNdCn4qZ0/uRBKVqrRR2DYgIZTZN0IHDsJC7LCUa69F2cj3A7PcZ7GNRHbGvDzaYW/6cPjly1p/zvS05vuR7Q== murray@macbook"
+
+# System Configuration
+vm_timezone = "UTC"
+
+# Docker Configuration
+docker_registry_mirror = ""  # Optional: e.g., "https://mirror.smartmur.lab"
+
+# GitHub Repository Configuration
+github_repo_url    = "https://github.com/sugarayhkins/homemedia.git"
+github_repo_branch = "main"
+arr_compose_path   = "docker-compose.yml"
+
+# Storage Paths
+arr_storage_path = "/srv/media"
+arr_config_path  = "/srv/config"
+
+# HA Configuration
+enable_ha = true
+ha_group  = "arr-stack"
+
+# Tags
+tags = ["arr-stack", "ha", "docker"]
