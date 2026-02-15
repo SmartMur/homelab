@@ -4,14 +4,54 @@ A comprehensive, security-focused collection of 90+ self-hosted services for you
 
 ---
 
-## New to Homelabs? START HERE
+## Quick Links
 
-Feeling overwhelmed by 90+ folders? Don't worry - we've got you covered!
+**New to this?**
+- [BEGINNER-GUIDE.md](BEGINNER-GUIDE.md) - Complete guide from zero to hero
+- [QUICK-DEPLOY.md](QUICK-DEPLOY.md) - Deploy entire stack in 30 minutes
+- [Beginner's Journey](#beginners-journey---your-first-30-days) - 30-day roadmap
 
-- **First time?** Jump to the [Beginner's Journey](#beginners-journey---your-first-30-days) (Week-by-week roadmap) 
-- **Know Docker?** Check the [Service Catalog](#complete-service-catalog) (Find what you need) 
-- **Ready to deploy?** Go to [Quick Start](#quick-start) 
-- **Questions?** Read the [FAQ](#frequently-asked-questions)
+**Ready to deploy?**
+- [PROXMOX-DEPLOYMENT.md](PROXMOX-DEPLOYMENT.md) - Deploy on Proxmox with exact specs
+- [One-click scripts](#one-click-deployment-scripts) - Automated deployment
+- [Service Catalog](#complete-service-catalog) - Browse all 90+ services
+
+**Need help deciding?**
+- [HARDWARE-CALCULATOR.md](HARDWARE-CALCULATOR.md) - Calculate exact hardware needs
+- [ARCHITECTURE.md](ARCHITECTURE.md) - Network diagrams and layouts
+- [Community Examples](examples/) - Real homelab setups
+
+---
+
+## One-Click Deployment Scripts
+
+Deploy entire stacks with a single command:
+
+### Deploy Core Services (5 minutes)
+```bash
+curl -sSL https://raw.githubusercontent.com/SmartMur/homelab/main/scripts/deploy-core.sh | bash
+```
+Installs: Traefik, Pi-hole, Authelia, Vaultwarden, Portainer, Watchtower
+
+### Deploy Media Stack (10 minutes)
+```bash
+curl -sSL https://raw.githubusercontent.com/SmartMur/homelab/main/scripts/deploy-media.sh | bash
+```
+Installs: Jellyfin, Sonarr, Radarr, Prowlarr, qBittorrent
+
+See [QUICK-DEPLOY.md](QUICK-DEPLOY.md) for more options.
+
+---
+
+## Community Showcases
+
+See what others have built:
+
+- [Minimal Setup](examples/showcase-1-minimal.md) - Raspberry Pi 4, 6 services, $120
+- [Media Server](examples/showcase-2-media-server.md) - Intel NUC, 15 services, replaces Netflix/Disney+
+- Share yours! Open a PR
+
+---
 
 ---
 
