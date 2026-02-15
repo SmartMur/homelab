@@ -1,0 +1,3 @@
+[submodule "projects/home_media"]
+	path = projects/home_media
+	url = https://github.com/sugarayhkins-max/home_media.git
