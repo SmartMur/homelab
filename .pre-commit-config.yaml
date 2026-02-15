@@ -1,5 +1,6 @@
 ---
 repos:
+  # Basic pre-commit hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
@@ -7,7 +8,54 @@ repos:
       - id: destroyed-symlinks
       - id: detect-aws-credentials
         args: [--allow-missing-credentials]
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+        args: ['--unsafe']
+      - id: check-added-large-files
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+      - id: detect-private-key
+        exclude: '\.example$'
+      - id: mixed-line-ending
+  
+  # Docker compose validation
   - repo: https://github.com/IamTheFij/docker-pre-commit
     rev: v3.0.1
     hooks:
       - id: docker-compose-check
+
+  # Secret detection - CRITICAL for security
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+        exclude: |
+          (?x)^(
+            .*\.example$|
+            .*\.md$|
+            SECURITY\.md$|
+            scripts/generate-secrets\.sh$
+          )$
+
+  # Custom hooks to prevent secret commits
+  - repo: local
+    hooks:
+      - id: check-env-files
+        name: Prevent .env file commits
+        entry: bash -c 'if git diff --cached --name-only | grep -E "\.env$" | grep -v "\.env\.example$"; then echo "ERROR Attempting to commit .env file! Use .env.example instead."; exit 1; fi'
+        language: system
+        pass_filenames: false
+      
+      - id: check-credentials
+        name: Prevent credential file commits
+        entry: bash -c 'if git diff --cached --name-only | grep -E "(^|/)(password|token|secret|credentials\.yaml|users_database\.yml|configuration\.yml|cf-token|access_token|cloudflare\.ini)$" | grep -v "\.example$"; then echo "ERROR Attempting to commit credential file!"; exit 1; fi'
+        language: system
+        pass_filenames: false
+      
+      - id: check-hardcoded-secrets
+        name: Check for hardcoded secrets
+        entry: bash -c 'if git diff --cached -U0 | grep -iE "^\+.*(password|secret|api_key|token)\s*[:=]\s*[\"'\''][^\"'\'']{8,}[\"'\'']" | grep -viE "(CHANGE_ME|example|your_|TODO|\.example|password_file|token_file)"; then echo "ERROR Possible hardcoded secret detected!"; exit 1; fi'
+        language: system
+        pass_filenames: false

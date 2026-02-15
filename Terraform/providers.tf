@@ -1,16 +1,17 @@
+# Proxmox Provider Configuration for HA Cluster
+
 terraform {
-  required_version = ">= 0.14"
   required_providers {
     proxmox = {
-      source  = "registry.example.com/telmate/proxmox"
-      version = ">= 1.0.0"
+      source  = "telmate/proxmox"
+      version = "~> 3.0"
     }
   }
 }
 
 provider "proxmox" {
-    pm_tls_insecure = true
-    pm_api_url = "https://proxmox.smartmur.lab/api2/json"
-    pm_api_token_secret = "112e04a7-4f15-45c5-b1e1-624e90a55f8b"
-    pm_api_token_id = "root@pam!terraform"
+  pm_api_url      = var.proxmox_api_url
+  pm_api_token_id = var.proxmox_token_id
+  pm_api_token    = var.proxmox_token_secret
+  pm_tls_insecure = var.proxmox_tls_insecure
 }

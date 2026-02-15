@@ -42,7 +42,7 @@ services:
       WEBPASSWORD: 'password'
       PIHOLE_DNS_: '172.70.9.2#5053'
       DNSMASQ_LISTENING: 'all'
-      VIRTUAL_HOST: pihole.yourdomain.com
+      VIRTUAL_HOST: pihole.smartmur.lab
     # Volumes store your data between container upgrades
     volumes:
       - '/home/ubuntu/docker/pihole/:/etc/pihole/'
@@ -57,11 +57,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.pihole.entrypoints=http"
-      - "traefik.http.routers.pihole.rule=Host(`pihole.yourdomain.com`)"
+      - "traefik.http.routers.pihole.rule=Host(`pihole.smartmur.lab`)"
       - "traefik.http.middlewares.pihole-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.pihole.middlewares=pihole-https-redirect"
       - "traefik.http.routers.pihole-secure.entrypoints=https"
-      - "traefik.http.routers.pihole-secure.rule=Host(`pihole.yourdomain.com`)"
+      - "traefik.http.routers.pihole-secure.rule=Host(`pihole.smartmur.lab`)"
       - "traefik.http.routers.pihole-secure.tls=true"
       - "traefik.http.routers.pihole-secure.service=pihole"
       - "traefik.http.services.pihole.loadbalancer.server.port=80"

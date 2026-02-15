@@ -1,0 +1,186 @@
+#cloud-config
+# ARR Stack VM Cloud-Init Configuration
+
+hostname: ${hostname}
+timezone: ${timezone}
+
+# Update system
+apt:
+  preserve_sources_list: true
+  sources:
+    docker:
+      source: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $RELEASE stable"
+      keyid: 9DC858229FC7DD38854AE2D88D81803C0EBFCD88
+
+package_update: true
+package_upgrade: true
+
+packages:
+  - curl
+  - wget
+  - git
+  - jq
+  - ca-certificates
+  - gnupg
+  - lsb-release
+  - apt-transport-https
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-compose-plugin
+  - nfs-common
+  - cifs-utils
+
+# SSH Configuration
+ssh_authorized_keys:
+  - ${ssh_public_key}
+
+ssh:
+  enabled: true
+  port: 22
+
+# Disable password authentication
+disable_root: false
+
+# Create directories for storage
+runcmd:
+  # Wait for cloud-init to complete
+  - cloud-init status --wait
+
+  # Create storage directories
+  - mkdir -p ${arr_storage_path}
+  - mkdir -p ${arr_config_path}
+  - chmod 755 ${arr_storage_path}
+  - chmod 755 ${arr_config_path}
+
+  # Enable and start Docker
+  - systemctl enable docker
+  - systemctl start docker
+
+  # Add docker group and user
+  - groupadd -f docker
+  - usermod -aG docker root
+
+  # Configure Docker daemon (optional registry mirror)
+  %{ if docker_mirror != "" ~}
+  - |
+    cat > /etc/docker/daemon.json <<EOF
+    {
+      "registry-mirrors": ["${docker_mirror}"],
+      "log-driver": "json-file",
+      "log-opts": {
+        "max-size": "10m",
+        "max-file": "3"
+      }
+    }
+    EOF
+  - systemctl restart docker
+  %{ endif ~}
+
+  # Clone homemedia repository
+  - git clone --branch ${github_repo_branch} ${github_repo_url} /opt/homemedia
+  - cd /opt/homemedia
+
+  # Create environment file for ARR apps
+  - |
+    cat > /opt/homemedia/.env <<EOF
+    # ARR Stack Environment Variables
+    PUID=0
+    PGID=0
+    TZ=${timezone}
+    UMASK=022
+    
+    # Storage Paths
+    CONFIG_PATH=${arr_config_path}
+    STORAGE_PATH=${arr_storage_path}
+    DOWNLOADS_PATH=${arr_storage_path}/downloads
+    MEDIA_PATH=${arr_storage_path}/media
+    
+    # Network
+    HOSTNAME=${hostname}
+    
+    # Docker
+    DOCKER_BUILDKIT=1
+    COMPOSE_DOCKER_CLI_BUILD=1
+    EOF
+
+  # Wait for Docker socket
+  - |
+    for i in {1..30}; do
+      if [ -S /var/run/docker.sock ]; then
+        echo "Docker socket ready"
+        break
+      fi
+      echo "Waiting for Docker socket... ($i/30)"
+      sleep 1
+    done
+
+  # Deploy ARR stack
+  - cd /opt/homemedia
+  - docker compose -f ${arr_compose_path} pull
+  - docker compose -f ${arr_compose_path} up -d
+
+  # Verify deployment
+  - sleep 5
+  - docker compose -f ${arr_compose_path} ps
+
+  # Log completion
+  - echo "ARR Stack deployment completed at $(date)" >> /var/log/cloud-init-output.log
+
+# Write files
+write_files:
+  - path: /etc/docker/daemon.json
+    owner: root:root
+    permissions: '0644'
+    content: |
+      {
+        "log-driver": "json-file",
+        "log-opts": {
+          "max-size": "10m",
+          "max-file": "3"
+        }
+      }
+
+  - path: /opt/homemedia/.env
+    owner: root:root
+    permissions: '0644'
+    content: |
+      PUID=0
+      PGID=0
+      TZ=${timezone}
+      UMASK=022
+      CONFIG_PATH=${arr_config_path}
+      STORAGE_PATH=${arr_storage_path}
+      DOWNLOADS_PATH=${arr_storage_path}/downloads
+      MEDIA_PATH=${arr_storage_path}/media
+      HOSTNAME=${hostname}
+
+  - path: /usr/local/bin/arr-health-check.sh
+    owner: root:root
+    permissions: '0755'
+    content: |
+      #!/bin/bash
+      # Health check script for ARR stack
+      COMPOSE_FILE="/opt/homemedia/${arr_compose_path}"
+      
+      if [ ! -f "$COMPOSE_FILE" ]; then
+        echo "Compose file not found: $COMPOSE_FILE"
+        exit 1
+      fi
+      
+      cd /opt/homemedia
+      
+      # Check if containers are running
+      RUNNING=$(docker compose -f ${arr_compose_path} ps --services --filter "status=running" | wc -l)
+      TOTAL=$(docker compose -f ${arr_compose_path} ps --services | wc -l)
+      
+      if [ "$RUNNING" -eq "$TOTAL" ] && [ "$TOTAL" -gt 0 ]; then
+        echo "All containers running ($RUNNING/$TOTAL)"
+        exit 0
+      else
+        echo "Some containers not running ($RUNNING/$TOTAL)"
+        exit 1
+      fi
+
+# Final message
+final_message: "ARR Stack VM initialization completed in $UPTIME seconds"

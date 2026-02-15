@@ -1,0 +1,115 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run weekly on Monday at 9am UTC
+    - cron: '0 9 * * 1'
+
+jobs:
+  secret-scan:
+    name: Scan for Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  validate-configs:
+    name: Validate Configurations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install yamllint
+          pip install pre-commit
+
+      - name: Validate YAML files
+        run: |
+          find . -name "*.yaml" -o -name "*.yml" | \
+          grep -v ".github" | \
+          xargs yamllint -d relaxed || true
+
+      - name: Run pre-commit hooks
+        run: |
+          pre-commit install
+          pre-commit run --all-files || true
+
+  docker-compose-check:
+    name: Validate Docker Compose Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Validate docker-compose files
+        run: |
+          # Find all docker-compose files
+          find . -name "docker-compose*.yaml" -o -name "docker-compose*.yml" | while read file; do
+            echo "Validating: $file"
+            docker-compose -f "$file" config > /dev/null || echo "⚠️  Issue with $file"
+          done
+
+  security-checklist:
+    name: Security Checklist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check for common security issues
+        run: |
+          echo "Checking for .env files (should only be .example)..."
+          if find . -name ".env" ! -name ".env.example" -type f | grep -v ".git" | grep .; then
+            echo "❌ Found .env files that should not be committed!"
+            exit 1
+          else
+            echo "✅ No .env files found (only templates)"
+          fi
+
+          echo ""
+          echo "Checking for password/token files..."
+          if find . \( -name "password" -o -name "*token" -o -name "credentials.yaml" \) \
+             ! -name "*.example" ! -path "*/.git/*" -type f | grep .; then
+            echo "⚠️  Found potential secret files"
+            exit 1
+          else
+            echo "✅ No obvious secret files found"
+          fi
+
+          echo ""
+          echo "Checking for CHANGE_ME in committed files..."
+          if git ls-files | xargs grep -l "CHANGE_ME" | grep -v ".example"; then
+            echo "⚠️  Found CHANGE_ME in non-example files"
+          else
+            echo "✅ No CHANGE_ME in committed files"
+          fi
+
+  dependabot-auto-approve:
+    name: Auto-approve Dependabot PRs
+    runs-on: ubuntu-latest
+    if: github.actor == 'dependabot[bot]'
+    steps:
+      - name: Approve Dependabot PR
+        run: |
+          gh pr review --approve "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,124 @@
+# yamllint disable rule:comments-indentation
+---
+###############################################################################
+# Authelia Configuration - EXAMPLE FILE
+# Copy this to configuration.yml and customize for your environment
+# Secrets should be set via environment variables (see .env.example)
+###############################################################################
+
+theme: dark
+
+## JWT Secret - Set via AUTHELIA_JWT_SECRET environment variable
+jwt_secret: ${AUTHELIA_JWT_SECRET}
+
+## Default redirection URL
+default_redirection_url: ${AUTHELIA_DEFAULT_REDIRECTION_URL}
+
+## Default 2FA method for new users
+default_2fa_method: ""
+
+server:
+  host: 0.0.0.0
+  port: 9091
+
+log:
+  level: info
+  format: text
+
+telemetry:
+  metrics:
+    enabled: false
+
+totp:
+  disable: false
+  issuer: authelia.com
+  algorithm: sha1
+  digits: 6
+  period: 30
+  skew: 1
+  secret_size: 32
+
+webauthn:
+  disable: false
+
+ntp:
+  address: "time.cloudflare.com:123"
+  version: 4
+  max_desync: 3s
+  disable_startup_check: false
+
+authentication_backend:
+  password_reset:
+    disable: false
+
+  refresh_interval: 5m
+
+  file:
+    path: /config/users_database.yml
+    watch: false
+    password:
+      algorithm: argon2
+      argon2:
+        variant: argon2id
+        iterations: 3
+        memory: 65536
+        parallelism: 4
+        key_length: 32
+        salt_length: 16
+
+password_policy:
+  standard:
+    enabled: true
+    min_length: 8
+    max_length: 0
+    require_uppercase: true
+    require_lowercase: true
+    require_number: true
+    require_special: true
+
+access_control:
+  default_policy: one_factor
+
+  rules:
+    - domain: ${AUTHELIA_DOMAIN}
+      policy: bypass
+
+session:
+  name: authelia_session
+  domain: ${AUTHELIA_DOMAIN}
+  same_site: lax
+  
+  ## Session secret - Set via AUTHELIA_SESSION_SECRET environment variable
+  secret: ${AUTHELIA_SESSION_SECRET}
+  
+  expiration: 1h
+  inactivity: 5m
+  remember_me_duration: 1M
+
+regulation:
+  max_retries: 3
+  find_time: 2m
+  ban_time: 5m
+
+storage:
+  ## Encryption key - Set via AUTHELIA_STORAGE_ENCRYPTION_KEY environment variable
+  encryption_key: ${AUTHELIA_STORAGE_ENCRYPTION_KEY}
+
+  local:
+    path: /config/db.sqlite3
+
+notifier:
+  disable_startup_check: false
+  
+  filesystem:
+    filename: /config/notification.txt
+
+  ## SMTP Configuration (uncomment and configure if needed)
+  # smtp:
+  #   host: ${AUTHELIA_NOTIFIER_SMTP_HOST}
+  #   port: ${AUTHELIA_NOTIFIER_SMTP_PORT}
+  #   username: ${AUTHELIA_NOTIFIER_SMTP_USERNAME}
+  #   password: ${AUTHELIA_NOTIFIER_SMTP_PASSWORD}
+  #   sender: "Authelia <noreply@${AUTHELIA_DOMAIN}>"
+  #   subject: "[Authelia] {title}"
+...

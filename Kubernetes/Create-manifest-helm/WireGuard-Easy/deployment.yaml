@@ -30,7 +30,7 @@ spec:
       containers:
         - env:
             - name: WG_HOST
-              value: "wg.yourdomain.com" # change me
+              value: "wg.smartmur.lab" # change me
             - name: PASSWORD
               value: "password!"
             - name: WG_DEFAULT_DNS

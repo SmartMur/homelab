@@ -10,12 +10,12 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`www.portainer.yourdomain.com`) # change me
+    - match: Host(`www.portainer.smartmur.lab`) # change me
       kind: Rule
       services:
         - name: portainer
           port: 9443
-    - match: Host(`portainer.yourdomain.com`) # change me
+    - match: Host(`portainer.smartmur.lab`) # change me
       kind: Rule
       services:
         - name: portainer

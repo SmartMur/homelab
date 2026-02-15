@@ -37,11 +37,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.keycloak.entrypoints=http"
-      - "traefik.http.routers.keycloak.rule=Host(`keycloak.yourdomain.com`)"
+      - "traefik.http.routers.keycloak.rule=Host(`keycloak.smartmur.lab`)"
       - "traefik.http.middlewares.keycloak-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.keycloak.middlewares=keycloak-https-redirect"
       - "traefik.http.routers.keycloak-secure.entrypoints=https"
-      - "traefik.http.routers.keycloak-secure.rule=Host(`keycloak.yourdomain.com`)"
+      - "traefik.http.routers.keycloak-secure.rule=Host(`keycloak.smartmur.lab`)"
       - "traefik.http.routers.keycloak-secure.tls=true"
       - "traefik.http.routers.keycloak-secure.service=keycloak"
       - "traefik.http.services.keycloak.loadbalancer.server.port=8080"

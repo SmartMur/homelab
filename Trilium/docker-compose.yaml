@@ -12,11 +12,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.trilium.entrypoints=http"
-      - "traefik.http.routers.trilium.rule=Host(`trilium.yourdomain.com`)"
+      - "traefik.http.routers.trilium.rule=Host(`trilium.smartmur.lab`)"
       - "traefik.http.middlewares.trilium-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.trilium.middlewares=trilium-https-redirect"
       - "traefik.http.routers.trilium-secure.entrypoints=https"
-      - "traefik.http.routers.trilium-secure.rule=Host(`trilium.yourdomain.com`)"
+      - "traefik.http.routers.trilium-secure.rule=Host(`trilium.smartmur.lab`)"
       - "traefik.http.routers.trilium-secure.tls=true"
       - "traefik.http.routers.trilium-secure.service=trilium"
       - "traefik.http.services.trilium.loadbalancer.server.port=8080"

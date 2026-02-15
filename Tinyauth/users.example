@@ -1,0 +1,10 @@
+# Tinyauth Users File
+# Format: username:bcrypt_hash:totp_secret
+# Generate bcrypt hash: docker run -it ghcr.io/steveiliop56/tinyauth:v3 hash-password "yourpassword"
+# Generate TOTP secret: openssl rand -base64 32 | tr -dc 'A-Z0-9' | head -c 32
+
+alice:$2y$10$CHANGE_ME_GENERATE_BCRYPT_HASH:CHANGE_ME_GENERATE_TOTP_SECRET
+bob:$2y$10$CHANGE_ME_GENERATE_BCRYPT_HASH:CHANGE_ME_GENERATE_TOTP_SECRET
+
+# GitHub OAuth Configuration
+# Add your OAuth app details in .env file

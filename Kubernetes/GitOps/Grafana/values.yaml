@@ -626,7 +626,7 @@ notifiers: {}
 #      org_name: Main Org.
 #      is_default: true
 #      settings:
-#        addresses: an_email_address@example.com
+#        addresses: admin@smartmur.lab
 #    delete_notifiers:
 
 ## Configure grafana dashboard providers
