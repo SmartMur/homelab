@@ -1,10 +1,7 @@
-# 🌐 Traefik v3 - Reverse Proxy & SSL Manager
+# Traefik v3 - Reverse Proxy & SSL Manager
 
-> **Difficulty:** 🟢 Beginner  
-> **RAM Required:** 256MB  
-> **Deployment Time:** 15-30 minutes
 
-## 📖 What is Traefik?
+## What is Traefik?
 
 Traefik is a modern reverse proxy and load balancer that makes it easy to deploy and manage your services with automatic HTTPS.
 
@@ -15,9 +12,9 @@ Traefik is a modern reverse proxy and load balancer that makes it easy to deploy
 
 **Instead of:**
 ```
-http://192.168.1.100:8096  # Jellyfin
-http://192.168.1.100:8080  # Portainer
-http://192.168.1.100:3000  # Gitea
+http://192.168.1.100:8096 # Jellyfin
+http://192.168.1.100:8080 # Portainer
+http://192.168.1.100:3000 # Gitea
 ```
 
 **You get:**
@@ -27,17 +24,17 @@ https://portainer.yourdomain.com
 https://gitea.yourdomain.com
 ```
 
-## ✅ Why You Need This
+## Why You Need This
 
-- ✅ **Automatic HTTPS** - Free SSL certificates from Let's Encrypt
-- ✅ **Nice URLs** - Use subdomains instead of IP:port
-- ✅ **Single Entry Point** - One place to manage all services
-- ✅ **Auto-Discovery** - Reads Docker labels, no manual config
-- ✅ **Load Balancing** - Distribute traffic across multiple instances
+- **Automatic HTTPS** - Free SSL certificates from Let's Encrypt
+- **Nice URLs** - Use subdomains instead of IP:port
+- **Single Entry Point** - One place to manage all services
+- **Auto-Discovery** - Reads Docker labels, no manual config
+- **Load Balancing** - Distribute traffic across multiple instances
 
 **This should be one of your FIRST services!**
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### Required
 - [ ] Domain name (e.g., from Cloudflare, Namecheap - $10-15/year)
@@ -49,25 +46,25 @@ https://gitea.yourdomain.com
 - [ ] Cloudflare account (for DNS challenge)
 - [ ] Email address (for Let's Encrypt notifications)
 
-## 🚀 Quick Start
+## Quick Start
 
-### Step 1: Get Your Domain Ready
+### 1. Get Your Domain Ready
 
 **Option A: Using Cloudflare (Recommended)**
 1. Sign up at cloudflare.com
 2. Add your domain
 3. Update nameservers at your registrar
 4. Create API token:
-   - Go to: My Profile → API Tokens
-   - Create Token → Edit Zone DNS
-   - Zone Resources: Include → Specific Zone → yourdomain.com
-   - Copy the token
+ - Go to: My Profile → API Tokens
+ - Create Token → Edit Zone DNS
+ - Zone Resources: Include → Specific Zone → yourdomain.com
+ - Copy the token
 
 **Option B: Direct DNS**
 1. Point A record to your public IP
 2. Point wildcard *.yourdomain.com to your public IP
 
-### Step 2: Clone and Configure
+### 2. Clone and Configure
 
 ```bash
 # Navigate to Traefik directory
@@ -80,25 +77,25 @@ cp .env.example .env
 nano .env
 ```
 
-### Step 3: Configure .env File
+### 3. Configure .env File
 
 ```bash
 # Required Settings
-DOMAIN=yourdomain.com                    # Your domain
-EMAIL=your-email@example.com             # For Let's Encrypt
+DOMAIN=yourdomain.com # Your domain
+EMAIL=your-email@example.com # For Let's Encrypt
 
 # Cloudflare Settings (if using Cloudflare)
-CF_API_TOKEN=your_cloudflare_api_token   # From Cloudflare dashboard
+CF_API_TOKEN=your_cloudflare_api_token # From Cloudflare dashboard
 
 # Dashboard Access (Change these!)
 TRAEFIK_DASHBOARD_USER=admin
-TRAEFIK_DASHBOARD_PASSWORD=changeme123   # Use strong password!
+TRAEFIK_DASHBOARD_PASSWORD=changeme123 # Use strong password!
 
 # Optional: Network
-TRAEFIK_NETWORK=traefik                  # Docker network name
+TRAEFIK_NETWORK=traefik # Docker network name
 ```
 
-### Step 4: Deploy
+### 4. Deploy
 
 ```bash
 # Start Traefik
@@ -111,59 +108,59 @@ docker compose logs -f
 docker ps | grep traefik
 ```
 
-### Step 5: Access Dashboard
+### 5. Access Dashboard
 
 1. Open browser
 2. Go to: `https://traefik.yourdomain.com`
 3. Login with credentials from .env
 4. You should see the Traefik dashboard!
 
-**🎉 Success!** Traefik is now running and managing SSL certificates automatically.
+Done. Traefik is now running and managing SSL certificates automatically.
 
-## 📁 File Structure
+## File Structure
 
 ```
 Traefikv3/
-├── docker-compose.yaml       # Main configuration
-├── .env                      # Your secrets (gitignored)
-├── .env.example             # Template to copy
-├── config/
-│   └── traefik.yaml         # Traefik configuration
-├── acme/                    # SSL certificates (auto-generated)
-└── README.md               # This file
+ docker-compose.yaml # Main configuration
+ .env # Your secrets (gitignored)
+ .env.example # Template to copy
+ config/
+ traefik.yaml # Traefik configuration
+ acme/ # SSL certificates (auto-generated)
+ README.md # This file
 ```
 
-## 🔧 Configuration Explained
+## Configuration Explained
 
 ### docker-compose.yaml
 
 ```yaml
 services:
-  traefik:
-    image: traefik:v3.0
-    container_name: traefik
-    restart: unless-stopped
-    
-    # Expose HTTP and HTTPS
-    ports:
-      - "80:80"     # HTTP
-      - "443:443"   # HTTPS
-      
-    # Mount Docker socket (to read labels)
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - ./config/traefik.yaml:/etc/traefik/traefik.yaml
-      - ./acme:/acme
-    
-    # Network
-    networks:
-      - traefik
-    
-    # Labels for dashboard
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN}`)"
-      - "traefik.http.routers.dashboard.service=api@internal"
+ traefik:
+ image: traefik:v3.0
+ container_name: traefik
+ restart: unless-stopped
+ 
+ # Expose HTTP and HTTPS
+ ports:
+ - "80:80" # HTTP
+ - "443:443" # HTTPS
+ 
+ # Mount Docker socket (to read labels)
+ volumes:
+ - /var/run/docker.sock:/var/run/docker.sock:ro
+ - ./config/traefik.yaml:/etc/traefik/traefik.yaml
+ - ./acme:/acme
+ 
+ # Network
+ networks:
+ - traefik
+ 
+ # Labels for dashboard
+ labels:
+ - "traefik.enable=true"
+ - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN}`)"
+ - "traefik.http.routers.dashboard.service=api@internal"
 ```
 
 ### Key Concepts
@@ -178,7 +175,7 @@ services:
 **Middlewares** - Modify requests
 - Authentication, rate limiting, headers, etc.
 
-## 🔗 Adding Services to Traefik
+## Adding Services to Traefik
 
 To expose a service through Traefik, add labels to its docker-compose.yaml:
 
@@ -186,31 +183,31 @@ To expose a service through Traefik, add labels to its docker-compose.yaml:
 
 ```yaml
 services:
-  jellyfin:
-    image: jellyfin/jellyfin
-    container_name: jellyfin
-    networks:
-      - traefik  # Must be on Traefik network
-    labels:
-      # Enable Traefik
-      - "traefik.enable=true"
-      
-      # Router configuration
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN}`)"
-      - "traefik.http.routers.jellyfin.entrypoints=websecure"
-      - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
-      
-      # Service configuration (which port)
-      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+ jellyfin:
+ image: jellyfin/jellyfin
+ container_name: jellyfin
+ networks:
+ - traefik # Must be on Traefik network
+ labels:
+ # Enable Traefik
+ - "traefik.enable=true"
+ 
+ # Router configuration
+ - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN}`)"
+ - "traefik.http.routers.jellyfin.entrypoints=websecure"
+ - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
+ 
+ # Service configuration (which port)
+ - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
 
 networks:
-  traefik:
-    external: true
+ traefik:
+ external: true
 ```
 
 **That's it!** Jellyfin is now accessible at `https://jellyfin.yourdomain.com`
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### 1. Strong Dashboard Password
 
@@ -228,8 +225,8 @@ Add IP whitelist to dashboard:
 
 ```yaml
 labels:
-  - "traefik.http.routers.dashboard.middlewares=dashboard-auth,dashboard-ipwhitelist"
-  - "traefik.http.middlewares.dashboard-ipwhitelist.ipwhitelist.sourcerange=192.168.1.0/24"
+ - "traefik.http.routers.dashboard.middlewares=dashboard-auth,dashboard-ipwhitelist"
+ - "traefik.http.middlewares.dashboard-ipwhitelist.ipwhitelist.sourcerange=192.168.1.0/24"
 ```
 
 ### 3. Use Cloudflare DNS Challenge
@@ -251,13 +248,13 @@ Add security headers middleware:
 
 ```yaml
 labels:
-  - "traefik.http.middlewares.security-headers.headers.sslRedirect=true"
-  - "traefik.http.middlewares.security-headers.headers.stsSeconds=315360000"
-  - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
-  - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
+ - "traefik.http.middlewares.security-headers.headers.sslRedirect=true"
+ - "traefik.http.middlewares.security-headers.headers.stsSeconds=315360000"
+ - "traefik.http.middlewares.security-headers.headers.browserXssFilter=true"
+ - "traefik.http.middlewares.security-headers.headers.contentTypeNosniff=true"
 ```
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: "Bad Gateway" or "Service Unavailable"
 
@@ -341,7 +338,7 @@ sudo systemctl stop nginx
 docker stop container-name
 ```
 
-## 📊 Monitoring
+## Monitoring
 
 ### View Traefik Dashboard
 
@@ -377,7 +374,7 @@ ls -la acme/
 cat acme/acme.json | jq
 ```
 
-## 🔄 Updating
+## Updating
 
 ```bash
 # Pull latest image
@@ -395,7 +392,7 @@ docker compose logs -f
 - Service discovery
 - Configuration reload
 
-## 🌐 Advanced Configuration
+## Hard Configuration
 
 ### Wildcard Certificates
 
@@ -409,18 +406,18 @@ Create reusable middlewares:
 ```yaml
 # In traefik.yaml or via labels
 http:
-  middlewares:
-    # Rate limiting
-    rate-limit:
-      rateLimit:
-        average: 100
-        burst: 50
-    
-    # CORS headers
-    cors-headers:
-      headers:
-        accessControlAllowMethods: ["GET","POST","PUT"]
-        accessControlAllowOriginList: ["https://yourdomain.com"]
+ middlewares:
+ # Rate limiting
+ rate-limit:
+ rateLimit:
+ average: 100
+ burst: 50
+ 
+ # CORS headers
+ cors-headers:
+ headers:
+ accessControlAllowMethods: ["GET","POST","PUT"]
+ accessControlAllowOriginList: ["https://yourdomain.com"]
 ```
 
 ### Multiple Domains
@@ -429,10 +426,10 @@ Support multiple domains:
 
 ```yaml
 labels:
-  - "traefik.http.routers.app.rule=Host(`app.domain1.com`) || Host(`app.domain2.com`)"
+ - "traefik.http.routers.app.rule=Host(`app.domain1.com`) || Host(`app.domain2.com`)"
 ```
 
-## 📚 Related Services
+## Related Services
 
 **Deploy these next:**
 1. **Authelia** - Add 2FA to all services behind Traefik
@@ -444,7 +441,7 @@ labels:
 - Authentication layers (Authelia, Authentik)
 - Monitoring tools (Grafana, Uptime Kuma)
 
-## 💡 Tips & Tricks
+## Tips & Tricks
 
 ### 1. Test with curl
 
@@ -472,7 +469,7 @@ Enable debug logging in `traefik.yaml`:
 
 ```yaml
 log:
-  level: DEBUG
+ level: DEBUG
 ```
 
 ### 4. Backup Certificates
@@ -482,14 +479,14 @@ log:
 cp acme/acme.json acme/acme.json.backup
 ```
 
-## 📖 Additional Resources
+## Additional Resources
 
 - [Official Traefik Docs](https://doc.traefik.io/traefik/)
 - [Traefik + Docker Guide](https://doc.traefik.io/traefik/providers/docker/)
 - [Let's Encrypt Rate Limits](https://letsencrypt.org/docs/rate-limits/)
 - [Cloudflare API Tokens](https://developers.cloudflare.com/api/tokens/create)
 
-## 🆘 Getting Help
+## Getting Help
 
 **Before asking for help, collect:**
 1. Traefik logs: `docker compose logs traefik`
@@ -503,7 +500,7 @@ cp acme/acme.json acme/acme.json.backup
 - Traefik Discord
 - GitHub Issues
 
-## ✅ Success Checklist
+## Success Checklist
 
 After setup, verify:
 
@@ -521,4 +518,4 @@ After setup, verify:
 2. Add your first service (Portainer, Jellyfin, etc.)
 3. Set up monitoring with Uptime Kuma
 
-**Traefik is your homelab's front door - configure it well and everything else becomes easier!** 🚀
+**Traefik is your homelab's front door - configure it well and everything else becomes easier!** 

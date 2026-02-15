@@ -1,27 +1,24 @@
-# 🎬 Jellyfin - Free Media Server
+# Jellyfin - Free Media Server
 
-> **Difficulty:** 🟡 Intermediate  
-> **RAM Required:** 2GB (4GB+ for transcoding)  
-> **Deployment Time:** 20-30 minutes
 
-## 📖 What is Jellyfin?
+## What is Jellyfin?
 
 Jellyfin is a free and open-source media server that lets you stream your movies, TV shows, music, and photos to any device.
 
-**Think of it as:**
+Basically:
 - Your personal Netflix
 - Plex without the subscription fees
 - Complete control over your media library
 
-**Benefits:**
-- 🎥 Stream movies/TV shows anywhere
-- 📱 Apps for every device (iOS, Android, Roku, etc.)
-- 🆓 100% free, no premium features locked
-- 🔒 Your data stays on your server
-- 🎨 Beautiful interface
-- 👥 Multiple user profiles
+What it does:
+- Stream movies/TV shows anywhere
+- Apps for every device (iOS, Android, Roku, etc.)
+- 100% free, no premium features locked
+- Your data stays on your server
+- Beautiful interface
+- Multiple user profiles
 
-## ✅ Why You Need This
+## Why You Need This
 
 **Cloud streaming services:**
 ```
@@ -39,7 +36,7 @@ Privacy: Complete
 Offline: Works without internet
 ```
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### Required
 - [ ] Docker & Docker Compose installed
@@ -69,43 +66,43 @@ Offline: Works without internet
 - [ ] Your media file formats
 - [ ] Basic file organization
 
-## 🚀 Quick Start
+## Quick Start
 
-### Step 1: Organize Your Media
+### 1. Organize Your Media
 
 Create this folder structure:
 
 ```
 /media/
-├── movies/
-│   ├── Avatar (2009)/
-│   │   └── Avatar (2009).mkv
-│   ├── Inception (2010)/
-│   │   └── Inception (2010).mp4
-│   └── ...
-├── tv/
-│   ├── Breaking Bad/
-│   │   ├── Season 01/
-│   │   │   ├── S01E01.mkv
-│   │   │   ├── S01E02.mkv
-│   │   │   └── ...
-│   │   └── Season 02/
-│   │       └── ...
-│   └── ...
-└── music/
-    ├── Artist Name/
-    │   ├── Album Name/
-    │   │   ├── 01 - Song.mp3
-    │   │   └── ...
-    │   └── ...
-    └── ...
+ movies/
+ Avatar (2009)/
+ Avatar (2009).mkv
+ Inception (2010)/
+ Inception (2010).mp4
+ ...
+ tv/
+ Breaking Bad/
+ Season 01/
+ S01E01.mkv
+ S01E02.mkv
+ ...
+ Season 02/
+ ...
+ ...
+ music/
+ Artist Name/
+ Album Name/
+ 01 - Song.mp3
+ ...
+ ...
+ ...
 ```
 
 **Naming conventions matter!**
 - Movies: `Movie Name (Year)/Movie Name (Year).ext`
 - TV: `Show Name/Season XX/SXXEXX.ext`
 
-### Step 2: Configure docker-compose.yml
+### 2. Configure docker-compose.yml
 
 ```bash
 cd Jellyfin
@@ -116,44 +113,44 @@ Update media paths to match yours:
 
 ```yaml
 services:
-  jellyfin:
-    image: jellyfin/jellyfin:latest
-    container_name: jellyfin
-    restart: unless-stopped
-    
-    # IMPORTANT: Update these paths
-    volumes:
-      - ./config:/config
-      - ./cache:/cache
-      - /path/to/your/movies:/media/movies:ro  # READ ONLY
-      - /path/to/your/tv:/media/tv:ro
-      - /path/to/your/music:/media/music:ro
-    
-    environment:
-      - TZ=America/New_York  # Your timezone
-    
-    ports:
-      - "8096:8096"  # Web UI
-    
-    # Optional: GPU transcoding
-    # devices:
-    #   - /dev/dri:/dev/dri  # Intel QuickSync
-    
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN}`)"
-      - "traefik.http.routers.jellyfin.entrypoints=websecure"
-      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
-    
-    networks:
-      - traefik
+ jellyfin:
+ image: jellyfin/jellyfin:latest
+ container_name: jellyfin
+ restart: unless-stopped
+ 
+ # IMPORTANT: Update these paths
+ volumes:
+ - ./config:/config
+ - ./cache:/cache
+ - /path/to/your/movies:/media/movies:ro # READ ONLY
+ - /path/to/your/tv:/media/tv:ro
+ - /path/to/your/music:/media/music:ro
+ 
+ environment:
+ - TZ=America/New_York # Your timezone
+ 
+ ports:
+ - "8096:8096" # Web UI
+ 
+ # Optional: GPU transcoding
+ # devices:
+ # - /dev/dri:/dev/dri # Intel QuickSync
+ 
+ labels:
+ - "traefik.enable=true"
+ - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN}`)"
+ - "traefik.http.routers.jellyfin.entrypoints=websecure"
+ - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+ 
+ networks:
+ - traefik
 
 networks:
-  traefik:
-    external: true
+ traefik:
+ external: true
 ```
 
-### Step 3: Deploy Jellyfin
+### 3. Deploy Jellyfin
 
 ```bash
 # Start Jellyfin
@@ -166,47 +163,47 @@ docker compose logs -f
 docker ps | grep jellyfin
 ```
 
-### Step 4: Initial Setup Wizard
+### 4. Initial Setup Wizard
 
 1. Open browser
 2. Go to: `http://YOUR-SERVER-IP:8096` or `https://jellyfin.yourdomain.com`
 3. Select language
 4. Create admin account
 5. Set up media libraries:
-   - Add Library → Movies → `/media/movies`
-   - Add Library → TV Shows → `/media/tv`
-   - Add Library → Music → `/media/music`
+ - Add Library → Movies → `/media/movies`
+ - Add Library → TV Shows → `/media/tv`
+ - Add Library → Music → `/media/music`
 6. Configure remote access (if using Traefik)
 7. Finish setup
 
-### Step 5: Scan Library
+### 5. Scan Library
 
 1. Dashboard → Libraries
 2. Click scan icon next to each library
 3. Wait for scan to complete
 4. Metadata and posters will download automatically
 
-**🎉 Success!** Your personal streaming service is ready!
+Done. Your personal streaming service is ready!
 
-## 📁 File Structure
+## File Structure
 
 ```
 Jellyfin/
-├── docker-compose.yaml     # Configuration
-├── config/                 # Jellyfin config (auto-created)
-│   ├── data/              # Database
-│   ├── metadata/          # Posters, fanart
-│   └── plugins/           # Installed plugins
-├── cache/                 # Transcoding cache
-└── README.md              # This file
+ docker-compose.yaml # Configuration
+ config/ # Jellyfin config (auto-created)
+ data/ # Database
+ metadata/ # Posters, fanart
+ plugins/ # Installed plugins
+ cache/ # Transcoding cache
+ README.md # This file
 
 /media/ (your media - separate location)
-├── movies/
-├── tv/
-└── music/
+ movies/
+ tv/
+ music/
 ```
 
-## 🎨 Customization
+## Customization
 
 ### Enable Hardware Transcoding
 
@@ -214,11 +211,11 @@ Jellyfin/
 
 ```yaml
 services:
-  jellyfin:
-    devices:
-      - /dev/dri:/dev/dri
-    group_add:
-      - "109"  # render group (check with: getent group render)
+ jellyfin:
+ devices:
+ - /dev/dri:/dev/dri
+ group_add:
+ - "109" # render group (check with: getent group render)
 ```
 
 Then in Jellyfin:
@@ -231,10 +228,10 @@ Then in Jellyfin:
 
 ```yaml
 services:
-  jellyfin:
-    runtime: nvidia
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
+ jellyfin:
+ runtime: nvidia
+ environment:
+ - NVIDIA_VISIBLE_DEVICES=all
 ```
 
 Requires: nvidia-docker runtime installed
@@ -281,13 +278,13 @@ Dashboard → Users:
 - Guest: Limited to 720p streaming
 - Admin: Full access
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### 1. Protect with Authelia
 
 ```yaml
 labels:
-  - "traefik.http.routers.jellyfin.middlewares=authelia@docker"
+ - "traefik.http.routers.jellyfin.middlewares=authelia@docker"
 ```
 
 Now requires 2FA before accessing Jellyfin.
@@ -327,12 +324,12 @@ docker compose up -d
 In docker-compose.yml:
 ```yaml
 volumes:
-  - /media/movies:/media/movies:ro  # :ro = read-only
+ - /media/movies:/media/movies:ro # :ro = read-only
 ```
 
 Jellyfin can't accidentally delete your media!
 
-## 🎬 Client Apps
+## Client Apps
 
 ### Download Official Apps
 
@@ -362,7 +359,7 @@ Just visit: `https://jellyfin.yourdomain.com`
 
 Works on any device with a browser!
 
-## 📊 Understanding Transcoding
+## Understanding Transcoding
 
 ### What is Transcoding?
 
@@ -413,45 +410,45 @@ Output: 1080p H264 (mobile can play)
 - SRT (external file, best)
 - ASS (for anime)
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: Library Not Showing Media
 
 **Check:**
 1. File permissions:
-   ```bash
-   ls -la /media/movies
-   # Should be readable by Jellyfin user
-   ```
+ ```bash
+ ls -la /media/movies
+ # Should be readable by Jellyfin user
+ ```
 
 2. Folder structure correct?
-   ```
-   Movies/
-     Avatar (2009)/
-       Avatar (2009).mkv  ← Correct
-   
-   NOT:
-   Movies/
-     Avatar.mkv  ← Wrong (no subfolder)
-   ```
+ ```
+ Movies/
+ Avatar (2009)/
+ Avatar (2009).mkv ← Correct
+ 
+ NOT:
+ Movies/
+ Avatar.mkv ← Wrong (no subfolder)
+ ```
 
 3. Rescan library:
-   Dashboard → Libraries → Scan
+ Dashboard → Libraries → Scan
 
 ### Issue: Playback Stuttering/Buffering
 
 **Causes:**
 1. **Transcoding on weak CPU**
-   - Enable hardware acceleration
-   - Or: Re-encode media to H264
+ - Enable hardware acceleration
+ - Or: Re-encode media to H264
 
 2. **Network too slow**
-   - Lower quality in player
-   - Use wired ethernet, not WiFi
+ - Lower quality in player
+ - Use wired ethernet, not WiFi
 
 3. **Disk too slow**
-   - Use SSD for media
-   - Or: Pre-convert media
+ - Use SSD for media
+ - Or: Pre-convert media
 
 **Check:**
 Dashboard → Playback → Active Streams
@@ -462,18 +459,18 @@ Dashboard → Playback → Active Streams
 
 **Solutions:**
 1. Verify naming:
-   - `Movie Name (Year)` format
-   - `SXXEXX` for TV episodes
+ - `Movie Name (Year)` format
+ - `SXXEXX` for TV episodes
 
 2. Identify library:
-   Dashboard → Libraries → [Library] → Identify
-   - Manually search and match
+ Dashboard → Libraries → [Library] → Identify
+ - Manually search and match
 
 3. Refresh metadata:
-   Right-click item → Refresh Metadata
+ Right-click item → Refresh Metadata
 
 4. Install TMDb plugin:
-   Dashboard → Plugins → Catalog → TMDb
+ Dashboard → Plugins → Catalog → TMDb
 
 ### Issue: Remote Access Not Working
 
@@ -509,7 +506,7 @@ docker exec jellyfin nvidia-smi
 
 Enable in Dashboard → Playback → Hardware acceleration
 
-## 🔄 Updating
+## Updating
 
 ```bash
 # Backup config first
@@ -528,7 +525,7 @@ docker compose logs -f
 - Verify hardware transcoding still enabled
 - Test client apps
 
-## 💡 Tips & Tricks
+## Tips & Tricks
 
 ### 1. Collections
 
@@ -574,7 +571,7 @@ In mobile app:
 - Download videos for offline watching
 - Perfect for travel
 
-## 📚 Related Services
+## Related Services
 
 **Deploy these next:**
 1. **Sonarr/Radarr** - Automated media management (not in repo)
@@ -586,14 +583,14 @@ In mobile app:
 - Traefik (remote access)
 - Backup solution (for library metadata)
 
-## 📖 Additional Resources
+## Additional Resources
 
 - [Official Jellyfin Docs](https://jellyfin.org/docs/)
 - [Naming Guidelines](https://jellyfin.org/docs/general/server/media/movies.html)
 - [Hardware Acceleration](https://jellyfin.org/docs/general/administration/hardware-acceleration.html)
 - [r/jellyfin](https://reddit.com/r/jellyfin)
 
-## 🆘 Getting Help
+## Getting Help
 
 **Before asking for help:**
 1. Check logs: `docker compose logs jellyfin`
@@ -613,7 +610,7 @@ In mobile app:
 - Jellyfin Forums
 - r/selfhosted
 
-## ✅ Success Checklist
+## Success Checklist
 
 - [ ] Jellyfin accessible via browser
 - [ ] Media library scanned successfully
@@ -635,4 +632,4 @@ In mobile app:
 4. Configure hardware transcoding
 5. Enjoy your content!
 
-**Congratulations! You've cut the cord and own your streaming! 🎬**
+**Congratulations! You've cut the cord and own your streaming! **

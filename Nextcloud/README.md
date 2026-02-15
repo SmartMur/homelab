@@ -1,28 +1,25 @@
-# ☁️ Nextcloud - Self-Hosted Cloud Storage
+# Nextcloud - Self-Hosted Cloud Storage
 
-> **Difficulty:** 🟡 Intermediate  
-> **RAM Required:** 1GB (2GB+ recommended)  
-> **Deployment Time:** 20-30 minutes
 
-## 📖 What is Nextcloud?
+## What is Nextcloud?
 
 Nextcloud is a self-hosted productivity platform that provides file storage, collaboration tools, calendar, contacts, and much more - all under your control.
 
-**Think of it as:**
+Basically:
 - Your own Google Drive + Google Calendar + Google Contacts
 - Dropbox replacement you own
 - Microsoft 365 without Microsoft
 
-**Benefits:**
-- 📁 Unlimited storage (limited only by your hardware)
-- 🔄 Sync across all devices
-- 👥 Share files with anyone
-- 📅 Calendar & contacts sync
-- 📝 Collaborative document editing
-- 🔒 100% privacy - your data, your server
-- 🆓 Free and open-source
+What it does:
+- Unlimited storage (limited only by your hardware)
+- Sync across all devices
+- Share files with anyone
+- Calendar & contacts sync
+- Collaborative document editing
+- 100% privacy - your data, your server
+- Free and open-source
 
-## ✅ Why You Need This
+## Why You Need This
 
 **Cloud storage services:**
 ```
@@ -40,7 +37,7 @@ Privacy: Complete
 Features: Everything included
 ```
 
-## 📋 Prerequisites
+## Prerequisites
 
 ### Required
 - [ ] Docker & Docker Compose installed
@@ -54,9 +51,9 @@ Features: Everything included
 - [ ] SSD for database performance
 - [ ] Regular backup strategy
 
-## 🚀 Quick Start
+## Quick Start
 
-### Step 1: Deploy Nextcloud
+### 1. Deploy Nextcloud
 
 ```bash
 # Navigate to directory
@@ -71,23 +68,23 @@ docker compose logs -f nextcloud
 # Wait for "ready to handle connections"
 ```
 
-### Step 2: Initial Setup
+### 2. Initial Setup
 
 1. Open browser
 2. Go to: `https://cloud.yourdomain.com`
 3. Create admin account:
-   - Username: admin (or your choice)
-   - Password: Use strong password from Vaultwarden!
+ - Username: admin (or your choice)
+ - Password: Use strong password from Vaultwarden!
 4. Configure database:
-   - Database: PostgreSQL
-   - User: nextcloud
-   - Password: (from docker-compose.yml)
-   - Database: nextcloud
-   - Host: db:5432
+ - Database: PostgreSQL
+ - User: nextcloud
+ - Password: (from docker-compose.yml)
+ - Database: nextcloud
+ - Host: db:5432
 5. Click "Finish setup"
 6. Wait 2-3 minutes for initialization
 
-### Step 3: Install Desktop Client
+### 3. Install Desktop Client
 
 **Windows/Mac/Linux:**
 1. Download from: https://nextcloud.com/install/#install-clients
@@ -98,7 +95,7 @@ docker compose logs -f nextcloud
 6. Choose sync folder
 7. Files sync automatically!
 
-### Step 4: Install Mobile App
+### 4. Install Mobile App
 
 **iOS/Android:**
 1. Download "Nextcloud" from App Store/Play Store
@@ -106,22 +103,22 @@ docker compose logs -f nextcloud
 3. Login
 4. Enable auto-upload for photos (optional)
 
-**🎉 Success!** You now have your own cloud storage!
+Done. You now have your own cloud storage!
 
-## 📁 File Structure
+## File Structure
 
 ```
 Nextcloud/
-├── docker-compose.yaml       # Configuration
-├── nextcloud/                # Nextcloud data (auto-created)
-│   ├── config/              # Nextcloud config
-│   ├── data/                # User files stored here
-│   └── apps/                # Installed apps
-├── db/                      # Database data
-└── README.md                # This file
+ docker-compose.yaml # Configuration
+ nextcloud/ # Nextcloud data (auto-created)
+ config/ # Nextcloud config
+ data/ # User files stored here
+ apps/ # Installed apps
+ db/ # Database data
+ README.md # This file
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### docker-compose.yml Explained
 
@@ -129,58 +126,58 @@ Nextcloud/
 version: '3'
 
 services:
-  # Database
-  db:
-    image: postgres:15-alpine
-    container_name: nextcloud-db
-    restart: unless-stopped
-    volumes:
-      - ./db:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: nextcloud
-      POSTGRES_USER: nextcloud
-      POSTGRES_PASSWORD: change-this-password  # Change this!
-    networks:
-      - nextcloud-net
+ # Database
+ db:
+ image: postgres:15-alpine
+ container_name: nextcloud-db
+ restart: unless-stopped
+ volumes:
+ - ./db:/var/lib/postgresql/data
+ environment:
+ POSTGRES_DB: nextcloud
+ POSTGRES_USER: nextcloud
+ POSTGRES_PASSWORD: change-this-password # Change this!
+ networks:
+ - nextcloud-net
 
-  # Nextcloud
-  nextcloud:
-    image: nextcloud:latest
-    container_name: nextcloud
-    restart: unless-stopped
-    depends_on:
-      - db
-    volumes:
-      - ./nextcloud:/var/www/html
-    environment:
-      - POSTGRES_HOST=db
-      - POSTGRES_DB=nextcloud
-      - POSTGRES_USER=nextcloud
-      - POSTGRES_PASSWORD=change-this-password  # Match above!
-      - NEXTCLOUD_ADMIN_USER=admin
-      - NEXTCLOUD_ADMIN_PASSWORD=change-admin-password
-      - NEXTCLOUD_TRUSTED_DOMAINS=cloud.yourdomain.com
-      - OVERWRITEPROTOCOL=https
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.nextcloud.rule=Host(`cloud.${DOMAIN}`)"
-      - "traefik.http.routers.nextcloud.entrypoints=websecure"
-      - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
-      
-      # WebDAV redirect middleware
-      - "traefik.http.middlewares.nextcloud-redirectregex.redirectRegex.permanent=true"
-      - "traefik.http.middlewares.nextcloud-redirectregex.redirectRegex.regex=https://(.*)/.well-known/(card|cal)dav"
-      - "traefik.http.middlewares.nextcloud-redirectregex.redirectRegex.replacement=https://$$1/remote.php/dav/"
-      - "traefik.http.routers.nextcloud.middlewares=nextcloud-redirectregex"
-    networks:
-      - traefik
-      - nextcloud-net
+ # Nextcloud
+ nextcloud:
+ image: nextcloud:latest
+ container_name: nextcloud
+ restart: unless-stopped
+ depends_on:
+ - db
+ volumes:
+ - ./nextcloud:/var/www/html
+ environment:
+ - POSTGRES_HOST=db
+ - POSTGRES_DB=nextcloud
+ - POSTGRES_USER=nextcloud
+ - POSTGRES_PASSWORD=change-this-password # Match above!
+ - NEXTCLOUD_ADMIN_USER=admin
+ - NEXTCLOUD_ADMIN_PASSWORD=change-admin-password
+ - NEXTCLOUD_TRUSTED_DOMAINS=cloud.yourdomain.com
+ - OVERWRITEPROTOCOL=https
+ labels:
+ - "traefik.enable=true"
+ - "traefik.http.routers.nextcloud.rule=Host(`cloud.${DOMAIN}`)"
+ - "traefik.http.routers.nextcloud.entrypoints=websecure"
+ - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
+ 
+ # WebDAV redirect middleware
+ - "traefik.http.middlewares.nextcloud-redirectregex.redirectRegex.permanent=true"
+ - "traefik.http.middlewares.nextcloud-redirectregex.redirectRegex.regex=https://(.*)/.well-known/(card|cal)dav"
+ - "traefik.http.middlewares.nextcloud-redirectregex.redirectRegex.replacement=https://$$1/remote.php/dav/"
+ - "traefik.http.routers.nextcloud.middlewares=nextcloud-redirectregex"
+ networks:
+ - traefik
+ - nextcloud-net
 
 networks:
-  traefik:
-    external: true
-  nextcloud-net:
-    internal: true
+ traefik:
+ external: true
+ nextcloud-net:
+ internal: true
 ```
 
 ### Important Settings
@@ -199,7 +196,7 @@ openssl rand -base64 32
 - Set to `https` when using Traefik
 - Tells Nextcloud it's behind reverse proxy
 
-## 🎨 Customization
+## Customization
 
 ### Enable Apps
 
@@ -230,20 +227,20 @@ Add to docker-compose.yml:
 
 ```yaml
 services:
-  onlyoffice:
-    image: onlyoffice/documentserver:latest
-    container_name: onlyoffice
-    restart: unless-stopped
-    environment:
-      - JWT_SECRET=change-this-secret
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.onlyoffice.rule=Host(`office.${DOMAIN}`)"
-      - "traefik.http.routers.onlyoffice.entrypoints=websecure"
-      - "traefik.http.services.onlyoffice.loadbalancer.server.port=80"
-    networks:
-      - traefik
-      - nextcloud-net
+ onlyoffice:
+ image: onlyoffice/documentserver:latest
+ container_name: onlyoffice
+ restart: unless-stopped
+ environment:
+ - JWT_SECRET=change-this-secret
+ labels:
+ - "traefik.enable=true"
+ - "traefik.http.routers.onlyoffice.rule=Host(`office.${DOMAIN}`)"
+ - "traefik.http.routers.onlyoffice.entrypoints=websecure"
+ - "traefik.http.services.onlyoffice.loadbalancer.server.port=80"
+ networks:
+ - traefik
+ - nextcloud-net
 ```
 
 Then in Nextcloud:
@@ -270,10 +267,10 @@ Mount network drives:
 
 1. Settings → Administration → External storage
 2. Add storage:
-   - Type: SMB/CIFS (network share)
-   - Host: 192.168.1.100
-   - Share: /media
-   - Username/Password
+ - Type: SMB/CIFS (network share)
+ - Host: 192.168.1.100
+ - Share: /media
+ - Username/Password
 3. Save
 
 ### Theming
@@ -284,7 +281,7 @@ Settings → Administration → Theming:
 - Set background image
 - Custom name
 
-## 🔒 Security Best Practices
+## Security Best Practices
 
 ### 1. Strong Admin Password
 
@@ -332,8 +329,8 @@ docker compose down
 
 # Backup files
 tar -czf nextcloud-backup-$(date +%Y%m%d).tar.gz \
-  nextcloud/ \
-  db/
+ nextcloud/ \
+ db/
 
 # Start containers
 docker compose up -d
@@ -353,7 +350,7 @@ docker exec -u www-data nextcloud php occ security:check
 
 Force HTTPS (handled by Traefik + OVERWRITEPROTOCOL).
 
-## 📱 Sync Everything
+## Sync Everything
 
 ### Files
 
@@ -394,7 +391,7 @@ URL: `https://cloud.yourdomain.com/remote.php/dav`
 
 Use Tasks app + CalDAV sync (same as calendar).
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: "Trusted Domain" Error
 
@@ -410,26 +407,26 @@ nano nextcloud/config/config.php
 
 # Add to trusted_domains array:
 'trusted_domains' =>
-  array (
-    0 => 'localhost',
-    1 => 'cloud.yourdomain.com',
-  ),
+ array (
+ 0 => 'localhost',
+ 1 => 'cloud.yourdomain.com',
+ ),
 ```
 
 ### Issue: Database Connection Failed
 
 **Check:**
 1. Database container running?
-   ```bash
-   docker ps | grep nextcloud-db
-   ```
+ ```bash
+ docker ps | grep nextcloud-db
+ ```
 
 2. Passwords match in docker-compose.yml?
 
 3. Database accessible?
-   ```bash
-   docker exec -it nextcloud-db psql -U nextcloud -d nextcloud
-   ```
+ ```bash
+ docker exec -it nextcloud-db psql -U nextcloud -d nextcloud
+ ```
 
 ### Issue: Can't Upload Large Files
 
@@ -437,11 +434,11 @@ nano nextcloud/config/config.php
 1. Check client upload limit
 2. Increase chunk size (see Customization)
 3. Check reverse proxy timeout:
-   
-   In Traefik config:
-   ```yaml
-   - "traefik.http.services.nextcloud.loadbalancer.server.timeout=300s"
-   ```
+ 
+ In Traefik config:
+ ```yaml
+ - "traefik.http.services.nextcloud.loadbalancer.server.timeout=300s"
+ ```
 
 ### Issue: WebDAV/CalDAV Not Working
 
@@ -455,29 +452,29 @@ nano nextcloud/config/config.php
 
 **Optimize:**
 1. **Use Redis for caching:**
-   
-   Add to docker-compose.yml:
-   ```yaml
-   redis:
-     image: redis:alpine
-     container_name: nextcloud-redis
-     restart: unless-stopped
-     networks:
-       - nextcloud-net
-   ```
-   
-   Configure Nextcloud:
-   ```bash
-   docker exec -u www-data nextcloud php occ config:system:set redis host --value=redis
-   docker exec -u www-data nextcloud php occ config:system:set redis port --value=6379
-   docker exec -u www-data nextcloud php occ config:system:set memcache.locking --value='\OC\Memcache\Redis'
-   ```
+ 
+ Add to docker-compose.yml:
+ ```yaml
+ redis:
+ image: redis:alpine
+ container_name: nextcloud-redis
+ restart: unless-stopped
+ networks:
+ - nextcloud-net
+ ```
+ 
+ Configure Nextcloud:
+ ```bash
+ docker exec -u www-data nextcloud php occ config:system:set redis host --value=redis
+ docker exec -u www-data nextcloud php occ config:system:set redis port --value=6379
+ docker exec -u www-data nextcloud php occ config:system:set memcache.locking --value='\OC\Memcache\Redis'
+ ```
 
 2. **Database maintenance:**
-   ```bash
-   docker exec -u www-data nextcloud php occ db:add-missing-indices
-   docker exec -u www-data nextcloud php occ db:convert-filecache-bigint
-   ```
+ ```bash
+ docker exec -u www-data nextcloud php occ db:add-missing-indices
+ docker exec -u www-data nextcloud php occ db:convert-filecache-bigint
+ ```
 
 3. **Use SSD** for database and Nextcloud data
 
@@ -494,7 +491,7 @@ Add to crontab on host:
 */5 * * * * docker exec -u www-data nextcloud php occ background:cron
 ```
 
-## 🔄 Updating
+## Updating
 
 ```bash
 # Backup first!
@@ -517,7 +514,7 @@ docker compose logs -f nextcloud
 - Test sync clients
 - Check installed apps
 
-## 💡 Tips & Tricks
+## Tips & Tricks
 
 ### 1. Shared Links
 
@@ -576,7 +573,7 @@ docker exec -u www-data nextcloud php occ user:add username
 docker exec -u www-data nextcloud php occ files:scan --all
 ```
 
-## 📚 Related Services
+## Related Services
 
 **Deploy these next:**
 1. **OnlyOffice** - Document editing
@@ -588,14 +585,14 @@ docker exec -u www-data nextcloud php occ files:scan --all
 - Traefik (remote access)
 - External storage (SMB shares, S3)
 
-## 📖 Additional Resources
+## Additional Resources
 
 - [Official Nextcloud Docs](https://docs.nextcloud.com/)
 - [Admin Manual](https://docs.nextcloud.com/server/latest/admin_manual/)
 - [Desktop Client Manual](https://docs.nextcloud.com/desktop/latest/)
 - [r/NextCloud](https://reddit.com/r/NextCloud)
 
-## 🆘 Getting Help
+## Getting Help
 
 **Before asking for help:**
 1. Check logs: `docker compose logs nextcloud`
@@ -614,7 +611,7 @@ docker exec -u www-data nextcloud php occ files:scan --all
 - Nextcloud Forums
 - r/selfhosted
 
-## ✅ Success Checklist
+## Success Checklist
 
 - [ ] Nextcloud accessible via browser
 - [ ] Admin account created
@@ -636,4 +633,4 @@ docker exec -u www-data nextcloud php occ files:scan --all
 4. Configure automated backups
 5. Explore apps (Deck, Notes, Talk)
 
-**Congratulations! You've ditched Google/Microsoft clouds! ☁️**
+**Congratulations! You've ditched Google/Microsoft clouds! **

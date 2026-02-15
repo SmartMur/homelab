@@ -1,8 +1,6 @@
-# 🚀 Getting Started with Your Homelab
+# Getting Started with Your Homelab
 
-> **New to homelabs?** This guide will take you from zero to running your first services in under an hour!
-
-## 📖 What is a Homelab?
+## What is a Homelab?
 
 A homelab is your personal server environment where you:
 - Run self-hosted services (instead of cloud services)
@@ -10,9 +8,9 @@ A homelab is your personal server environment where you:
 - Have complete control over your data
 - Replace expensive subscriptions
 
-**Think of it as:** Your own mini data center at home.
+In simple terms: Your own mini data center at home.
 
-## ✅ Prerequisites
+## Prerequisites
 
 Before starting, you need:
 
@@ -35,30 +33,30 @@ Before starting, you need:
 - **Learning curve:** 1-2 weeks
 - **Maintenance:** 1-2 hours/month (can be automated)
 
-## 🎯 Your First Hour
+## Your First Hour
 
-### Step 1: Choose Your Hardware (5 minutes)
+### 1. Choose Your Hardware (5 minutes)
 
-**Option A: Old Laptop/Desktop (Recommended for Beginners)**
-- ✅ Free (you already have it!)
-- ✅ Enough power for learning
-- ✅ Easy to set up
+**Option A: Old Laptop/Desktop (Recommended for Easys)**
+- Free (you already have it!)
+- Enough power for learning
+- Easy to set up
 - Use it!
 
 **Option B: Raspberry Pi**
-- 💰 $50-150 purchase
-- ✅ Low power consumption
-- ⚠️ Limited performance
+- $50-150 purchase
+- Low power consumption
+- Limited performance
 - Good for light services
 
 **Option C: Buy/Build Server**
-- 💰 $300-1500
-- ✅ Best performance
-- ⚠️ Do this later, after you know you like it
+- $300-1500
+- Best performance
+- Do this later, after you know you like it
 
 **Decision:** Start with what you have! You can always upgrade later.
 
-### Step 2: Install Operating System (30 minutes)
+### 2. Install Operating System (30 minutes)
 
 **Recommended: Ubuntu Server 22.04 LTS**
 
@@ -73,13 +71,13 @@ Why?
 2. Create bootable USB: Use [Rufus](https://rufus.ie) (Windows) or [Etcher](https://www.balena.io/etcher/) (Mac/Linux)
 3. Boot from USB
 4. Follow installer:
-   - Language: English
-   - Keyboard: Your layout
-   - Network: Automatic (DHCP)
-   - Storage: Use entire disk
-   - Profile: Create user account
-   - SSH: Enable OpenSSH server ← Important!
-   - Packages: Skip for now
+ - Language: English
+ - Keyboard: Your layout
+ - Network: Automatic (DHCP)
+ - Storage: Use entire disk
+ - Profile: Create user account
+ - SSH: Enable OpenSSH server <- Important!
+ - Packages: Skip for now
 5. Reboot and login
 
 **Alternative: Use Docker Desktop (Windows/Mac)**
@@ -88,7 +86,7 @@ Why?
 - Skip Ubuntu installation
 - Slightly different commands, but works!
 
-### Step 3: Install Docker (10 minutes)
+### 3. Install Docker (10 minutes)
 
 SSH into your server:
 ```bash
@@ -125,7 +123,7 @@ docker --version
 docker compose version
 ```
 
-### Step 4: Deploy Your First Service - Portainer (15 minutes)
+### 4. Deploy Your First Service - Portainer (15 minutes)
 
 Portainer = Web UI for managing Docker
 
@@ -139,18 +137,18 @@ cat > docker-compose.yml << 'EOF'
 version: '3'
 
 services:
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: unless-stopped
-    ports:
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+ portainer:
+ image: portainer/portainer-ce:latest
+ container_name: portainer
+ restart: unless-stopped
+ ports:
+ - "9000:9000"
+ volumes:
+ - /var/run/docker.sock:/var/run/docker.sock
+ - portainer_data:/data
 
 volumes:
-  portainer_data:
+ portainer_data:
 EOF
 
 # Start Portainer
@@ -166,20 +164,20 @@ docker ps
 3. Create admin account
 4. Select "Docker" environment
 
-**🎉 Congratulations!** You just deployed your first service!
+** Congratulations!** You just deployed your first service!
 
-## 🎓 What You Just Learned
+## What You Just Learned
 
 Let's break down what happened:
 
 ### docker-compose.yml
 This file is a "recipe" for your service:
 ```yaml
-services:           # List of containers
-  portainer:        # Name of service
-    image: ...      # Which Docker image to use
-    ports:          # Which ports to expose
-    volumes:        # Where to store data
+services: # List of containers
+ portainer: # Name of service
+ image: ... # Which Docker image to use
+ ports: # Which ports to expose
+ volumes: # Where to store data
 ```
 
 ### docker compose up -d
@@ -195,45 +193,45 @@ This command:
 
 You can create many containers from one image!
 
-## 🗺️ Your Next Steps
+## Your Next Steps
 
 ### Week 1: Foundation Services (Essential)
 
 Deploy these three services:
 
-1. **[Traefik](Traefik-Setup)** - Reverse proxy
-   - Why: Makes all services accessible with nice URLs
-   - Difficulty: 🟢 Beginner
-   - Time: 30 minutes
+1. [Traefik](Traefik-Setup) - Reverse proxy
+ - Why: Makes all services accessible with nice URLs
+ - Difficulty:  Easy
+ - Time: 30 minutes
 
-2. **[Pi-hole](Pihole-Setup)** - Ad blocker
-   - Why: Block ads on entire network
-   - Difficulty: 🟢 Beginner
-   - Time: 15 minutes
+2. [Pi-hole](Pihole-Setup) - Ad blocker
+ - Why: Block ads on entire network
+ - Difficulty:  Easy
+ - Time: 15 minutes
 
-3. **[Watchtower](Watchtower-Setup)** - Auto-updates
-   - Why: Keep containers updated automatically
-   - Difficulty: 🟢 Beginner
-   - Time: 5 minutes
+3. [Watchtower](Watchtower-Setup) - Auto-updates
+ - Why: Keep containers updated automatically
+ - Difficulty:  Easy
+ - Time: 5 minutes
 
 **After Week 1:** You have basic infrastructure!
 
 ### Week 2: Security Services (Important)
 
-4. **[Authelia](Authelia-Setup)** - 2FA & SSO
-   - Why: Protect all services with 2-factor authentication
-   - Difficulty: 🟡 Intermediate
-   - Time: 45 minutes
+4. [Authelia](Authelia-Setup) - 2FA & SSO
+ - Why: Protect all services with 2-factor authentication
+ - Difficulty:  Medium
+ - Time: 45 minutes
 
-5. **[Vaultwarden](Vaultwarden-Setup)** - Password manager
-   - Why: Secure password storage
-   - Difficulty: 🟢 Beginner
-   - Time: 15 minutes
+5. [Vaultwarden](Vaultwarden-Setup) - Password manager
+ - Why: Secure password storage
+ - Difficulty:  Easy
+ - Time: 15 minutes
 
-6. **[WireGuard](WireGuard-Setup)** - VPN
-   - Why: Secure remote access
-   - Difficulty: 🟡 Intermediate
-   - Time: 30 minutes
+6. [WireGuard](WireGuard-Setup) - VPN
+ - Why: Secure remote access
+ - Difficulty:  Medium
+ - Time: 30 minutes
 
 **After Week 2:** Your homelab is secure!
 
@@ -241,22 +239,22 @@ Deploy these three services:
 
 Choose based on your interests:
 
-**🎬 Media Enthusiast:**
+** Media Enthusiast:**
 - [Jellyfin](Jellyfin-Setup) - Stream your media
 - [Immich](Immich-Setup) - Photo backup
 - [Paperless-ngx](Paperless-Setup) - Document management
 
-**☁️ Cloud Replacement:**
+** Cloud Replacement:**
 - [Nextcloud](Nextcloud-Setup) - File sync
 - [Vikunja](Vikunja-Setup) - Task management
 - [Trilium](Trilium-Setup) - Note-taking
 
-**🏠 Smart Home:**
+** Smart Home:**
 - [Home Assistant](Home-Assistant-Setup) - Smart home hub
 - [Mosquitto](Mosquitto-Setup) - MQTT broker
 - [Zigbee2MQTT](Zigbee2MQTT-Setup) - Zigbee bridge
 
-**💻 Developer:**
+** Developer:**
 - [Gitea](Gitea-Setup) - Git hosting
 - [Code-Server](Code-Server-Setup) - VS Code in browser
 - [IT-Tools](IT-Tools-Setup) - Developer utilities
@@ -265,13 +263,13 @@ Choose based on your interests:
 
 ### Week 4: Polish & Monitoring
 
-- **[Uptime Kuma](Uptime-Kuma-Setup)** - Monitor uptime
-- **[Grafana](Grafana-Setup)** - Metrics & dashboards
-- **[Backup Strategy](Backup-Strategy)** - Protect your data
+- [Uptime Kuma](Uptime-Kuma-Setup) - Monitor uptime
+- [Grafana](Grafana-Setup) - Metrics & dashboards
+- [Backup Strategy](Backup-Strategy) - Protect your data
 
-**After Week 4:** Production-ready homelab! 🎉
+**After Week 4:** Production-ready homelab! 
 
-## 📚 Learning Resources
+## Learning Resources
 
 ### Essential Reading
 - [Docker Basics](Docker-Basics) - Understand containers
@@ -287,7 +285,7 @@ Choose based on your interests:
 - [r/selfhosted](https://reddit.com/r/selfhosted) - Self-hosting specific
 - [Discord Servers](Discord-Servers) - Real-time chat
 
-## ❓ Frequently Asked Questions
+## FAQ
 
 ### Do I need a domain name?
 **Not required**, but recommended ($10/year).
@@ -309,9 +307,9 @@ Choose based on your interests:
 
 ### Is this legal?
 **Yes!** Self-hosting is 100% legal.
-- Hosting your own services: ✅ Legal
-- Using VPNs: ✅ Legal (in most countries)
-- Piracy: ❌ Illegal (don't do it)
+- Hosting your own services: Legal
+- Using VPNs: Legal (in most countries)
+- Piracy: Illegal (don't do it)
 
 ### What if something breaks?
 **That's how you learn!**
@@ -320,7 +318,7 @@ Choose based on your interests:
 - Ask in r/homelab or r/selfhosted
 - Worst case: Delete and recreate container
 
-## 🐛 Common Issues
+## Common Issues
 
 ### Can't access service from browser
 **Check:**
@@ -362,7 +360,7 @@ Common causes:
 - Wrong file permissions
 - Typo in docker-compose.yml
 
-## ✅ Success Checklist
+## Success Checklist
 
 After your first week, verify:
 
@@ -374,24 +372,24 @@ After your first week, verify:
 - [ ] Have deployed 3-5 services
 - [ ] Services accessible from your network
 
-## 🎯 Next Steps
+## Next Steps
 
 **Completed the basics?** Great! Now:
 
-1. ✅ Read [First 30 Days](First-30-Days) guide
-2. ✅ Browse [Service Catalog](Service-Catalog) for ideas
-3. ✅ Join [r/homelab](https://reddit.com/r/homelab) community
-4. ✅ Share your setup!
-5. ✅ Help other beginners
+1. Read [First 30 Days](First-30-Days) guide
+2. Browse [Service Catalog](Service-Catalog) for ideas
+3. Join [r/homelab](https://reddit.com/r/homelab) community
+4. Share your setup!
+5. Help other beginners
 
 **Want to dive deeper?**
-- [Docker Basics](Docker-Basics) - Advanced Docker concepts
+- [Docker Basics](Docker-Basics) - Hard Docker concepts
 - [Networking 101](Networking-101) - Network fundamentals
 - [Kubernetes](Kubernetes-Deployment) - Next-level orchestration
 
 ---
 
-## 💬 Feedback
+## Feedback
 
 Was this guide helpful? Found an error?
 - Open a GitHub issue
@@ -400,9 +398,9 @@ Was this guide helpful? Found an error?
 
 ---
 
-**Ready for your next service?**  
-👉 **[Deploy Traefik →](Traefik-Setup)**
+**Ready for your next service?** 
+ **[Deploy Traefik ->](Traefik-Setup)**
 
 ---
 
-*Good luck on your homelab journey! Remember: Everyone started where you are. Take it one step at a time, and have fun! 🚀*
+*Good luck on your homelab journey! Remember: Everyone started where you are. Take it one step at a time, and have fun! *

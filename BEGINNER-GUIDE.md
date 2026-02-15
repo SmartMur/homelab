@@ -1,10 +1,8 @@
-# 🎓 Complete Beginner's Guide to Self-Hosting
-
-> **Welcome!** This guide assumes you have ZERO experience with self-hosting, Docker, or homelabs. We'll start from the absolute basics and build up to a fully functional homelab.
+# Complete Easy's Guide to Self-Hosting
 
 ---
 
-## 📚 Table of Contents
+## Contents
 
 1. [What is a Homelab?](#what-is-a-homelab)
 2. [Why Self-Host?](#why-self-host)
@@ -19,75 +17,75 @@
 
 ---
 
-## 🏠 What is a Homelab?
+## What is a Homelab?
 
 A **homelab** is a personal environment where you run services on your own hardware instead of relying on cloud providers like Google, Microsoft, or Amazon.
 
 **Think of it like this:**
-- Instead of paying Google for Drive → You run Nextcloud at home
-- Instead of using Google Photos → You run Immich on your own server
-- Instead of Netflix (but for your own media) → You run Jellyfin/Plex
+- Instead of paying Google for Drive -> You run Nextcloud at home
+- Instead of using Google Photos -> You run Immich on your own server
+- Instead of Netflix (but for your own media) -> You run Jellyfin/Plex
 
 **Your homelab is:**
-- 🏠 A computer/server running 24/7 at your home
-- 📦 Multiple "services" (apps) running in containers
-- 🌐 Accessible from your devices (phone, laptop, TV)
-- 🔒 Under YOUR control, not Big Tech
+- A computer/server running 24/7 at your home
+- Multiple "services" (apps) running in containers
+- Accessible from your devices (phone, laptop, TV)
+- Under YOUR control, not Big Tech
 
 ---
 
-## 🎯 Why Self-Host?
+## Why Self-Host?
 
-### ✅ Advantages
+### Advantages
 
-1. **Privacy** - Your data stays on YOUR hardware
-2. **Control** - You decide what runs and how
-3. **Learning** - Gain valuable tech skills
-4. **Cost Savings** - Replace multiple subscriptions
-5. **Customization** - Configure everything exactly how you want
-6. **Fun** - It's genuinely enjoyable to build!
+1. Privacy - Your data stays on YOUR hardware
+2. Control - You decide what runs and how
+3. Learning - Gain valuable tech skills
+4. Cost Savings - Replace multiple subscriptions
+5. Customization - Configure everything exactly how you want
+6. Fun - It's genuinely enjoyable to build!
 
-### ⚠️ Trade-offs
+### Trade-offs
 
-1. **Time Investment** - Initial setup takes time (worth it!)
-2. **Electricity Costs** - ~$10-30/month depending on hardware
-3. **Maintenance** - Updates, monitoring (can be automated)
-4. **Internet Dependency** - Need good home internet
-5. **Learning Curve** - New concepts to learn (we'll help!)
+1. Time Investment - Initial setup takes time (worth it!)
+2. Electricity Costs - ~$10-30/month depending on hardware
+3. Maintenance - Updates, monitoring (can be automated)
+4. Internet Dependency - Need good home internet
+5. Learning Curve - New concepts to learn (we'll help!)
 
 ---
 
-## ✅ Prerequisites
+## Prerequisites
 
 ### What You NEED to Know (Before Starting)
 
-#### 🟢 Absolute Basics (Must Have)
-- [ ] **Use a computer** - Navigate files, install programs
-- [ ] **Use a web browser** - Click links, enter URLs
-- [ ] **Basic typing** - Can edit text files
-- [ ] **Follow instructions** - Read and execute steps in order
+####  Absolute Basics (Must Have)
+- [ ] Use a computer - Navigate files, install programs
+- [ ] Use a web browser - Click links, enter URLs
+- [ ] Basic typing - Can edit text files
+- [ ] Follow instructions - Read and execute steps in order
 
-#### 🟡 Helpful but Not Required (Can Learn Along the Way)
-- [ ] **Command line basics** - Ever used Terminal/CMD?
-- [ ] **What an IP address is** - Like 192.168.1.100
-- [ ] **What a port is** - Like :80 or :443
-- [ ] **Copy/paste code** - Into terminal or config files
+####  Helpful but Not Required (Can Learn Along the Way)
+- [ ] Command line basics - Ever used Terminal/CMD?
+- [ ] What an IP address is - Like 192.168.1.100
+- [ ] What a port is - Like :80 or :443
+- [ ] Copy/paste code - Into terminal or config files
 
-#### ❌ You DON'T Need to Know (Yet!)
-- ❌ Programming/coding
-- ❌ Linux system administration
-- ❌ Networking protocols
-- ❌ Docker/containers (you'll learn!)
+#### You DON'T Need to Know (Yet!)
+- Programming/coding
+- Linux system administration
+- Networking protocols
+- Docker/containers (you'll learn!)
 
 **If you can use a computer and follow directions, you can do this!**
 
 ---
 
-## 🧠 Understanding the Basics
+## Understanding the Basics
 
 Before we start, let's understand the key concepts:
 
-### 🐳 What is Docker?
+### What is Docker?
 
 **Simple explanation:**
 - Docker is like a "shipping container" for apps
@@ -104,11 +102,11 @@ Before we start, let's understand the key concepts:
 - **Without Docker:** Installing 10 apps = 10 different installation guides, dependencies, conflicts
 - **With Docker:** Installing 10 apps = Copy 10 folders, run `docker-compose up`, done!
 
-### 🌐 What is a Reverse Proxy? (Traefik)
+### What is a Reverse Proxy? (Traefik)
 
 **Simple explanation:**
 - One entrance for all your services
-- Routes traffic: "jellyfin.yourdomain.com" → Jellyfin, "nextcloud.yourdomain.com" → Nextcloud
+- Routes traffic: "jellyfin.yourdomain.com" -> Jellyfin, "nextcloud.yourdomain.com" -> Nextcloud
 - Handles HTTPS/SSL automatically
 - Like a receptionist directing visitors to the right office
 
@@ -117,7 +115,7 @@ Before we start, let's understand the key concepts:
 - Automatic HTTPS certificates
 - One place to manage access
 
-### 🔒 What is 2FA/SSO? (Authelia)
+### What is 2FA/SSO? (Authelia)
 
 **Simple explanation:**
 - **2FA** (Two-Factor Authentication) = Username + Password + Phone Code
@@ -129,7 +127,7 @@ Before we start, let's understand the key concepts:
 - Don't remember 20 different passwords
 - Security without hassle
 
-### 🏠 What is DNS? (Pi-hole)
+### What is DNS? (Pi-hole)
 
 **Simple explanation:**
 - DNS translates names (google.com) to numbers (142.250.80.46)
@@ -143,69 +141,69 @@ Before we start, let's understand the key concepts:
 
 ---
 
-## 💻 Choosing Your Hardware
+## Choosing Your Hardware
 
-### 🤔 What Can I Use?
+### What Can I Use?
 
 You have several options:
 
-#### Option 1: Old Laptop/Desktop (🟢 Best for Beginners)
+#### Option 1: Old Laptop/Desktop ( Best for Easys)
 **Pros:**
-- ✅ You probably already have one
-- ✅ Free to start
-- ✅ Decent performance
-- ✅ Built-in battery backup (laptop)
+- You probably already have one
+- Free to start
+- Decent performance
+- Built-in battery backup (laptop)
 
 **Cons:**
-- ⚠️ Uses more power than dedicated hardware
-- ⚠️ Takes up space
-- ⚠️ May be noisy
+- Uses more power than dedicated hardware
+- Takes up space
+- May be noisy
 
 **Perfect for:** Testing, learning, first 6 months
 
-#### Option 2: Raspberry Pi 4/5 (🟢 Great for Learning)
+#### Option 2: Raspberry Pi 4/5 ( Great for Learning)
 **Pros:**
-- ✅ Very low power ($5-10/month electricity)
-- ✅ Silent operation
-- ✅ Small footprint
-- ✅ Affordable ($50-100)
+- Very low power ($5-10/month electricity)
+- Silent operation
+- Small footprint
+- Affordable ($50-100)
 
 **Cons:**
-- ⚠️ Limited performance (ARM CPU)
-- ⚠️ 8GB RAM max
-- ⚠️ No x86 support (some apps won't work)
+- Limited performance (ARM CPU)
+- 8GB RAM max
+- No x86 support (some apps won't work)
 
 **Perfect for:** Pi-hole, Traefik, lightweight services
 
-#### Option 3: Mini PC / Intel NUC (🟡 Recommended)
+#### Option 3: Mini PC / Intel NUC ( Recommended)
 **Pros:**
-- ✅ Low power consumption
-- ✅ Silent or near-silent
-- ✅ Small form factor
-- ✅ Good performance
-- ✅ x86 compatibility
+- Low power consumption
+- Silent or near-silent
+- Small form factor
+- Good performance
+- x86 compatibility
 
 **Cons:**
-- ⚠️ Costs $300-600
-- ⚠️ Limited upgradeability
+- Costs $300-600
+- Limited upgradeability
 
 **Perfect for:** Serious homelab, 20+ services
 
-#### Option 4: Custom Server Build (🔴 Advanced)
+#### Option 4: Custom Server Build ( Hard)
 **Pros:**
-- ✅ Maximum performance
-- ✅ Highly upgradable
-- ✅ Can add GPUs, lots of storage
+- Maximum performance
+- Highly upgradable
+- Can add GPUs, lots of storage
 
 **Cons:**
-- ⚠️ Expensive ($1000+)
-- ⚠️ High power consumption
-- ⚠️ Can be noisy
-- ⚠️ Takes up space
+- Expensive ($1000+)
+- High power consumption
+- Can be noisy
+- Takes up space
 
 **Perfect for:** Power users, multiple VMs, media transcoding
 
-### 📋 Minimum Recommended Specs
+### Minimum Recommended Specs
 
 For a good beginner experience:
 
@@ -217,7 +215,7 @@ For a good beginner experience:
 | **Network** | 100Mbps ethernet | Gigabit ethernet |
 | **Power** | N/A | UPS backup (optional) |
 
-### 💰 Budget Recommendations
+### Budget Recommendations
 
 **$0 - Use what you have:**
 - Old laptop gathering dust
@@ -241,7 +239,7 @@ For a good beginner experience:
 - **Services:** Unlimited
 - **Cost:** ~$800-1500
 
-### 🎯 My Recommendation for Beginners
+### My Recommendation for Easys
 
 **Start with what you have!** 
 
@@ -254,7 +252,7 @@ For a good beginner experience:
 
 ---
 
-## 🐳 Installing Docker
+## Installing Docker
 
 Docker is the foundation of your homelab. Let's install it!
 
@@ -273,8 +271,8 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 
 # Set up the repository
 echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+ "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+ $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
 # Install Docker Engine
 sudo apt update
@@ -303,7 +301,7 @@ docker compose version
 3. Open Docker Desktop
 4. Test in Terminal: `docker --version`
 
-### ✅ Verify Installation
+### Verify Installation
 
 Run these commands:
 
@@ -321,22 +319,22 @@ docker run hello-world
 # Should download and run a test container
 ```
 
-If all three work, you're ready! 🎉
+If all three work, you're ready! 
 
 ---
 
-## 🚀 Your First Service: Portainer
+## Your First Service: Portainer
 
-Let's deploy your first service! We'll use **Portainer** - a web UI for managing Docker.
+Let's deploy your first service! We'll use Portainer - a web UI for managing Docker.
 
 ### Why Portainer First?
 
-- ✅ Simple to set up
-- ✅ Gives you a visual interface
-- ✅ Helps you understand Docker
-- ✅ Makes managing other services easier
+- Simple to set up
+- Gives you a visual interface
+- Helps you understand Docker
+- Makes managing other services easier
 
-### Step 1: Create a Directory
+### 1. Create a Directory
 
 ```bash
 # Create directory for Portainer
@@ -344,7 +342,7 @@ mkdir -p ~/homelab/portainer
 cd ~/homelab/portainer
 ```
 
-### Step 2: Create docker-compose.yml
+### 2. Create docker-compose.yml
 
 ```bash
 # Create the file
@@ -357,23 +355,23 @@ Paste this content:
 version: '3'
 
 services:
-  portainer:
-    image: portainer/portainer-ce:latest
-    container_name: portainer
-    restart: unless-stopped
-    ports:
-      - "9000:9000"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+ portainer:
+ image: portainer/portainer-ce:latest
+ container_name: portainer
+ restart: unless-stopped
+ ports:
+ - "9000:9000"
+ volumes:
+ - /var/run/docker.sock:/var/run/docker.sock
+ - portainer_data:/data
 
 volumes:
-  portainer_data:
+ portainer_data:
 ```
 
 Save with `Ctrl+O`, `Enter`, then exit with `Ctrl+X`
 
-### Step 3: Start Portainer
+### 3. Start Portainer
 
 ```bash
 # Start the container
@@ -385,7 +383,7 @@ docker ps
 
 You should see portainer in the list!
 
-### Step 4: Access Portainer
+### 4. Access Portainer
 
 1. Open browser
 2. Go to: `http://YOUR-SERVER-IP:9000`
@@ -393,7 +391,7 @@ You should see portainer in the list!
 4. Select "Docker" environment
 5. Click "Connect"
 
-**🎉 Congratulations!** You just deployed your first self-hosted service!
+** Congratulations!** You just deployed your first self-hosted service!
 
 ### Understanding What You Did
 
@@ -404,11 +402,11 @@ You should see portainer in the list!
 
 ---
 
-## 📅 Week-by-Week Journey
+## Week-by-Week Journey
 
 Now that you understand the basics, follow this proven 30-day path:
 
-### 🎯 Week 1: Foundation (Days 1-7)
+### Week 1: Foundation (Days 1-7)
 
 #### Day 1-2: Preparation
 - [ ] Choose your hardware
@@ -418,7 +416,7 @@ Now that you understand the basics, follow this proven 30-day path:
 - [ ] Get comfortable with Portainer UI
 
 #### Day 3-4: First Real Service - Traefik
-**What:** Reverse proxy with automatic HTTPS  
+**What:** Reverse proxy with automatic HTTPS 
 **Why:** Makes all future services accessible with nice URLs
 
 ```bash
@@ -426,16 +424,16 @@ cd ~/homelab
 git clone https://github.com/SmartMur/homelab.git
 cd homelab/Traefikv3
 cp .env.example .env
-nano .env  # Edit YOUR_DOMAIN and EMAIL
+nano .env # Edit YOUR_DOMAIN and EMAIL
 docker compose up -d
 ```
 
-**Success Check:**
+Done.
 - Access Traefik dashboard
 - See automatic HTTPS certificate
 
 #### Day 5-6: Network-Wide Ad Blocking - Pi-hole
-**What:** DNS server that blocks ads  
+**What:** DNS server that blocks ads 
 **Why:** Block ads on ALL devices
 
 ```bash
@@ -443,7 +441,7 @@ cd ~/homelab/homelab/Pihole
 docker compose up -d
 ```
 
-**Success Check:**
+Done.
 - Access Pi-hole web UI
 - Set router DNS to Pi-hole IP
 - Ads blocked on phone/laptop
@@ -454,14 +452,14 @@ docker compose up -d
 - [ ] Understand what each does?
 - [ ] Read logs if something broke
 
-**🎉 Week 1 Milestone:** You have a functioning reverse proxy, Docker GUI, and network ad blocker!
+** Week 1 Milestone:** You have a functioning reverse proxy, Docker GUI, and network ad blocker!
 
 ---
 
-### 🔐 Week 2: Security (Days 8-14)
+### Week 2: Security (Days 8-14)
 
 #### Day 8-10: Two-Factor Authentication - Authelia
-**What:** Add 2FA to all services  
+**What:** Add 2FA to all services 
 **Why:** Security without managing 20 passwords
 
 ```bash
@@ -471,22 +469,22 @@ cp configuration.yml.example configuration.yml
 cp users_database.yml.example users_database.yml
 
 # Generate secrets
-openssl rand -base64 64  # Copy this for JWT secret
-openssl rand -base64 64  # Copy this for session secret
+openssl rand -base64 64 # Copy this for JWT secret
+openssl rand -base64 64 # Copy this for session secret
 
-nano .env  # Add secrets
-nano users_database.yml  # Add your username
+nano .env # Add secrets
+nano users_database.yml # Add your username
 
 docker compose up -d
 ```
 
-**Success Check:**
+Done.
 - Access Authelia UI
 - Scan QR code with authenticator app
 - Test 2FA login
 
 #### Day 11-12: Password Manager - Vaultwarden
-**What:** Self-hosted Bitwarden  
+**What:** Self-hosted Bitwarden 
 **Why:** Never forget a password again
 
 ```bash
@@ -494,13 +492,13 @@ cd ~/homelab/homelab/Vaultwarden
 docker compose up -d
 ```
 
-**Success Check:**
+Done.
 - Create account
 - Install browser extension
 - Add first password
 
 #### Day 13-14: VPN Access - WireGuard
-**What:** Secure remote access  
+**What:** Secure remote access 
 **Why:** Access homelab from anywhere
 
 ```bash
@@ -508,36 +506,36 @@ cd ~/homelab/homelab/Wireguard
 docker compose up -d
 ```
 
-**Success Check:**
+Done.
 - Generate client config
 - Connect from phone
 - Access services remotely
 
-**🎉 Week 2 Milestone:** Your homelab is secure and accessible from anywhere!
+** Week 2 Milestone:** Your homelab is secure and accessible from anywhere!
 
 ---
 
-### 🎬 Week 3: Choose Your Path (Days 15-21)
+### Week 3: Choose Your Path (Days 15-21)
 
 Pick ONE based on your interests:
 
 #### Path A: Media Server
-Deploy: Jellyfin → Immich → Paperless-ngx
+Deploy: Jellyfin -> Immich -> Paperless-ngx
 
-#### Path B: Productivity Suite  
-Deploy: Nextcloud → Vikunja → Trilium
+#### Path B: Productivity Suite 
+Deploy: Nextcloud -> Vikunja -> Trilium
 
 #### Path C: Smart Home
-Deploy: Home-Assistant → Mosquitto → Zigbee2MQTT
+Deploy: Home-Assistant -> Mosquitto -> Zigbee2MQTT
 
 #### Path D: Developer Environment
-Deploy: Gitea → Code-Server → IT-Tools
+Deploy: Gitea -> Code-Server -> IT-Tools
 
 **Focus on ONE path. Try others later!**
 
 ---
 
-### 🚀 Week 4: Polish (Days 22-30)
+### Week 4: Polish (Days 22-30)
 
 #### Day 22-24: Monitoring
 Deploy: Uptime Kuma + Grafana
@@ -551,99 +549,99 @@ Set up: restic or rClone
 #### Day 29-30: Documentation
 - Document your setup
 - Create recovery plan
-- Celebrate! 🎉
+- Celebrate! 
 
-**🎉 30-Day Milestone:** Production-ready homelab!
+** 30-Day Milestone:** Production-ready homelab!
 
 ---
 
-## ❌ Common Mistakes to Avoid
+## Common Mistakes to Avoid
 
 ### 1. Starting Too Big
-**Mistake:** Trying to deploy 20 services in week 1  
+**Mistake:** Trying to deploy 20 services in week 1 
 **Solution:** Start with 3-5 core services, add more slowly
 
 ### 2. Ignoring Backups
-**Mistake:** No backup strategy until data loss  
+**Mistake:** No backup strategy until data loss 
 **Solution:** Set up backups by week 3, test restores
 
 ### 3. Weak Passwords
-**Mistake:** Using "password123" or same password everywhere  
+**Mistake:** Using "password123" or same password everywhere 
 **Solution:** Use Vaultwarden to generate strong, unique passwords
 
 ### 4. Exposing Everything to Internet
-**Mistake:** Port forwarding everything without VPN/2FA  
+**Mistake:** Port forwarding everything without VPN/2FA 
 **Solution:** Use VPN or Authelia before exposing services
 
 ### 5. Not Reading Logs
-**Mistake:** Service fails, give up without checking logs  
+**Mistake:** Service fails, give up without checking logs 
 **Solution:** Always check: `docker compose logs -f`
 
 ### 6. Skipping .env Files
-**Mistake:** Hardcoding secrets in docker-compose.yml  
+**Mistake:** Hardcoding secrets in docker-compose.yml 
 **Solution:** Always use .env files for sensitive data
 
 ### 7. No Documentation
-**Mistake:** Forgetting how you set things up  
+**Mistake:** Forgetting how you set things up 
 **Solution:** Document as you go, future you will thank you
 
 ### 8. Updating Everything at Once
-**Mistake:** Updating 20 services simultaneously, everything breaks  
+**Mistake:** Updating 20 services simultaneously, everything breaks 
 **Solution:** Update one service at a time, test before next
 
 ### 9. No Testing Before Production
-**Mistake:** Deploying untested configs to production  
+**Mistake:** Deploying untested configs to production 
 **Solution:** Test in dev first, then promote to production
 
 ### 10. Giving Up Too Early
-**Mistake:** First error = quit  
+**Mistake:** First error = quit 
 **Solution:** Errors are learning opportunities! Google, ask community, persevere
 
 ---
 
-## 🆘 Getting Help
+## Getting Help
 
-### 📖 Documentation
+### Documentation
 
 1. **This Repository**
-   - README.md - Overview and catalog
-   - BEGINNER-GUIDE.md - This guide
-   - Service-specific READMEs - Detailed guides
+ - README.md - Overview and catalog
+ - BEGINNER-GUIDE.md - This guide
+ - Service-specific READMEs - Detailed guides
 
 2. **Official Documentation**
-   - Docker: https://docs.docker.com
-   - Each service has its own docs
+ - Docker: https://docs.docker.com
+ - Each service has its own docs
 
-### 💬 Communities
+### Communities
 
 1. **Reddit**
-   - r/homelab - General homelab discussion
-   - r/selfhosted - Self-hosting specific
-   - r/docker - Docker questions
+ - r/homelab - General homelab discussion
+ - r/selfhosted - Self-hosting specific
+ - r/docker - Docker questions
 
 2. **Discord Servers**
-   - Search for "homelab discord"
-   - Most projects have official servers
+ - Search for "homelab discord"
+ - Most projects have official servers
 
 3. **Forums**
-   - Serverfault, Superuser
-   - Project-specific forums
+ - Serverfault, Superuser
+ - Project-specific forums
 
-### 🎥 YouTube Channels
+### YouTube Channels
 
-1. **TechnoTim** - Excellent homelab tutorials
-2. **NetworkChuck** - Beginner-friendly networking
-3. **Awesome Open Source** - Self-hosted app reviews
-4. **DB Tech** - Docker & homelab guides
+1. TechnoTim - Excellent homelab tutorials
+2. NetworkChuck - Easy-friendly networking
+3. Awesome Open Source - Self-hosted app reviews
+4. DB Tech - Docker & homelab guides
 
-### 🔍 How to Ask for Help
+### How to Ask for Help
 
-**❌ Bad Question:**
+** Bad Question:**
 ```
 "Jellyfin doesn't work help"
 ```
 
-**✅ Good Question:**
+** Good Question:**
 ```
 "I'm trying to deploy Jellyfin on Ubuntu 22.04 with Docker Compose.
 
@@ -667,31 +665,31 @@ What else should I check?"
 
 ---
 
-## 🎯 Next Steps
+## Next Steps
 
 1. **Complete the 30-Day Journey**
-   - Don't rush
-   - Learn each service
-   - Document everything
+ - Don't rush
+ - Learn each service
+ - Document everything
 
 2. **Join the Community**
-   - Share your setup on r/homelab
-   - Help others once you learn
-   - Show off your dashboard!
+ - Share your setup on r/homelab
+ - Help others once you learn
+ - Show off your dashboard!
 
 3. **Keep Learning**
-   - Try new services
-   - Optimize your setup
-   - Consider Kubernetes (later!)
+ - Try new services
+ - Optimize your setup
+ - Consider Kubernetes (later!)
 
 4. **Share Your Knowledge**
-   - Write a blog post
-   - Make YouTube video
-   - Help the next beginner
+ - Write a blog post
+ - Make YouTube video
+ - Help the next beginner
 
 ---
 
-## 🎉 Welcome to the Homelab Community!
+## Welcome to the Homelab Community!
 
 You're now part of a community of thousands of people who:
 - Value privacy and ownership
@@ -705,11 +703,11 @@ You're now part of a community of thousands of people who:
 - The community is here to help
 - Have fun!
 
-**Now go build something awesome! 🚀**
+**Now go build something awesome! **
 
 ---
 
-## 📚 Additional Resources
+## Additional Resources
 
 - [Main README](README.md) - Service catalog and quick start
 - [Security Guide](SECURITY.md) - Best practices
@@ -718,5 +716,5 @@ You're now part of a community of thousands of people who:
 
 ---
 
-*Questions? Issues? Contributions?*  
+*Questions? Issues? Contributions?* 
 Open an issue on GitHub or join the discussion in r/homelab!
