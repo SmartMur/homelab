@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-label="Homelab network map">
+  <rect width="1200" height="420" fill="#0f172a" rx="18"/>
+  <text x="600" y="48" fill="#e2e8f0" font-family="'Segoe UI', Arial, sans-serif" font-size="30" text-anchor="middle">Homelab Topology</text>
+
+  <g font-family="'Segoe UI', Arial, sans-serif" font-size="19" fill="#e2e8f0" text-anchor="middle">
+    <rect x="90" y="150" width="170" height="90" rx="14" fill="#1d4ed8"/>
+    <text x="175" y="203">Edge DNS / Proxy</text>
+
+    <rect x="360" y="85" width="180" height="90" rx="14" fill="#0ea5e9"/>
+    <text x="450" y="138">Security Layer</text>
+
+    <rect x="360" y="215" width="180" height="90" rx="14" fill="#0284c7"/>
+    <text x="450" y="268">Core Platform</text>
+
+    <rect x="660" y="85" width="180" height="90" rx="14" fill="#14b8a6"/>
+    <text x="750" y="138">Apps / Media</text>
+
+    <rect x="660" y="215" width="180" height="90" rx="14" fill="#0d9488"/>
+    <text x="750" y="268">Observability</text>
+
+    <rect x="940" y="150" width="170" height="90" rx="14" fill="#16a34a"/>
+    <text x="1025" y="203">Storage / Backup</text>
+  </g>
+
+  <g stroke="#93c5fd" stroke-width="4" fill="none">
+    <path d="M260 195 L360 130"/>
+    <path d="M260 195 L360 260"/>
+    <path d="M540 130 L660 130"/>
+    <path d="M540 260 L660 260"/>
+    <path d="M840 130 L940 195"/>
+    <path d="M840 260 L940 195"/>
+  </g>
+
+  <text x="600" y="382" fill="#94a3b8" font-family="'Segoe UI', Arial, sans-serif" font-size="17" text-anchor="middle">Reference view for edge, security, platform, workloads, and backup domains.</text>
+</svg>

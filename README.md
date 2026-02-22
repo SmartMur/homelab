@@ -1,4 +1,14 @@
+<p align="center">
+  <img src="assets/graphics/hero.svg" alt="SmartMur Homelab" width="100%" />
+</p>
+
 # Homelab Infrastructure Repository
+
+[![Platform](https://img.shields.io/badge/Platform-Proxmox%20%2B%20Docker-0ea5e9)](#one-click-deployment-scripts)
+[![Services](https://img.shields.io/badge/Services-90%2B-22c55e)](#complete-service-catalog)
+[![Security](https://img.shields.io/badge/Security-First-0284c7)](#security-first)
+[![License](https://img.shields.io/badge/License-MIT-22c55e.svg)](LICENSE)
+[![Repo](https://img.shields.io/badge/GitHub-SmartMur%2Fhomelab-181717?logo=github)](https://github.com/SmartMur/homelab)
 
 A comprehensive, security-focused collection of 90+ self-hosted services for your homelab.
 
@@ -20,6 +30,10 @@ A comprehensive, security-focused collection of 90+ self-hosted services for you
 - [HARDWARE-CALCULATOR.md](HARDWARE-CALCULATOR.md) - Calculate exact hardware needs
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Network diagrams and layouts
 - [Community Examples](examples/) - Real homelab setups
+
+<p align="center">
+  <img src="assets/graphics/network-map.svg" alt="Homelab topology map" width="100%" />
+</p>
 
 ---
 

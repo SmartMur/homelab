@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="520" viewBox="0 0 1400 520" role="img" aria-label="Homelab banner">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111827"/>
+      <stop offset="45%" stop-color="#1f2937"/>
+      <stop offset="100%" stop-color="#0f766e"/>
+    </linearGradient>
+    <linearGradient id="mesh" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.18"/>
+    </linearGradient>
+  </defs>
+  <rect width="1400" height="520" fill="url(#bg)" rx="24"/>
+  <rect x="60" y="60" width="1280" height="400" rx="20" fill="url(#mesh)" stroke="#99f6e4" stroke-opacity="0.35"/>
+  <text x="110" y="170" fill="#ccfbf1" font-family="'Segoe UI', Arial, sans-serif" font-size="30" letter-spacing="2">SMARTMUR HOMELAB PLATFORM</text>
+  <text x="110" y="255" fill="#ffffff" font-family="'Segoe UI', Arial, sans-serif" font-size="70" font-weight="700">90+ SELF-HOSTED SERVICES</text>
+  <text x="110" y="315" fill="#d1fae5" font-family="'Segoe UI', Arial, sans-serif" font-size="28">Security-first infrastructure playbooks, deployment guides, and architecture patterns.</text>
+  <g transform="translate(860,150)">
+    <rect x="0" y="0" width="420" height="220" rx="16" fill="#0b1220" fill-opacity="0.72" stroke="#67e8f9"/>
+    <circle cx="80" cy="65" r="18" fill="#34d399"/>
+    <circle cx="210" cy="65" r="18" fill="#22d3ee"/>
+    <circle cx="340" cy="65" r="18" fill="#38bdf8"/>
+    <path d="M98 65 L192 65 M228 65 L322 65" stroke="#99f6e4" stroke-width="5"/>
+    <text x="24" y="132" fill="#e2e8f0" font-family="monospace" font-size="23">Proxmox + Docker + Kubernetes</text>
+    <text x="24" y="170" fill="#a7f3d0" font-family="monospace" font-size="23">Auth + Monitoring + Backup</text>
+  </g>
+</svg>
