@@ -86,6 +86,9 @@ log/
 *~
 .DS_Store
 
+# Local scratch/download workspace
+/macOS/
+
 # Python and Node caches
 __pycache__/
 node_modules/
