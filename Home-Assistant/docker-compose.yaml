@@ -39,7 +39,7 @@ services:
     # Change that password, of course!
     environment:
       - POSTGRES_USER=homeassistant_user
-      - POSTGRES_PASSWORD=CHANGE_ME_POSTGRES_PASSWORD
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-CHANGE_ME_POSTGRES_PASSWORD}
       - POSTGRES_DB=homeassistant-db
       # ensure the database gets created correctly
       # https://github.com/matrix-org/synapse/blob/master/docs/postgres.md#set-up-database

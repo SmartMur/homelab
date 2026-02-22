@@ -84,7 +84,7 @@ services:
     image: docker.io/fbonalair/traefik-crowdsec-bouncer:latest
     container_name: bouncer-traefik
     environment:
-      CROWDSEC_BOUNCER_API_KEY: CHANGE_ME_CROWDSEC_BOUNCER_API_KEY # generate in crowdsec container - cscli bouncer add - then add here and redeploy
+      CROWDSEC_BOUNCER_API_KEY: ${CROWDSEC_BOUNCER_API_KEY:-CHANGE_ME_CROWDSEC_BOUNCER_API_KEY} # generate in crowdsec container - cscli bouncer add - then add here and redeploy
       CROWDSEC_AGENT_HOST: crowdsec:8080
     networks:
       - proxy # same network as traefik + crowdsec
@@ -136,7 +136,7 @@ services:
     environment:
       TZ: 'Europe/London'
       # Set a password to access the web interface. Not setting one will result in a random password being assigned
-      FTLCONF_webserver_api_password: 'CHANGE_ME_PIHOLE_WEB_PASSWORD'
+      FTLCONF_webserver_api_password: ${PIHOLE_WEB_PASSWORD:-CHANGE_ME_PIHOLE_WEB_PASSWORD}
       # If using Docker's default `bridge` network setting the dns listening mode should be set to 'all'3
       FTLCONF_dns_listeningMode: 'all'
       FTLCONF_dns_upstreams: '172.70.9.2#5053'

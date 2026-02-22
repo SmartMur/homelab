@@ -32,7 +32,7 @@ services:
     environment:
       - POSTGRES_USER=mautrix-discord
       # change this to something unique (you will need it for the generated config file)
-      - POSTGRES_PASSWORD=CHANGE_ME_POSTGRES_PASSWORD
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-CHANGE_ME_POSTGRES_PASSWORD}
       - POSTGRES_DB=mautrix-discord
       # ensure the database gets created correctly
       # https://github.com/matrix-org/synapse/blob/master/docs/postgres.md#set-up-database
@@ -47,4 +47,3 @@ services:
 
 networks:
   mautrix-discord:
-

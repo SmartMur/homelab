@@ -6,11 +6,11 @@ services:
     environment:
       VIKUNJA_SERVICE_PUBLICURL: https://vikunja.smartmur.lab
       VIKUNJA_DATABASE_HOST: db:3306
-      VIKUNJA_DATABASE_PASSWORD: changeme
+      VIKUNJA_DATABASE_PASSWORD: ${VIKUNJA_DATABASE_PASSWORD:-CHANGE_ME_VIKUNJA_DATABASE_PASSWORD}
       VIKUNJA_DATABASE_TYPE: mysql
       VIKUNJA_DATABASE_USER: vikunja
       VIKUNJA_DATABASE_DATABASE: vikunja
-      VIKUNJA_SERVICE_JWTSECRET: CHANGE_ME_VIKUNJA_JWT_SECRET
+      VIKUNJA_SERVICE_JWTSECRET: ${VIKUNJA_SERVICE_JWTSECRET:-CHANGE_ME_VIKUNJA_JWT_SECRET}
     volumes: 
       - ./files:/app/vikunja/files
     networks:
@@ -37,9 +37,9 @@ services:
     image: mariadb:10
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      MYSQL_ROOT_PASSWORD: supersupersecret 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-CHANGE_ME_MYSQL_ROOT_PASSWORD}
       MYSQL_USER: vikunja
-      MYSQL_PASSWORD: changeme
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-CHANGE_ME_MYSQL_PASSWORD}
       MYSQL_DATABASE: vikunja
     networks:
       - proxy
@@ -47,7 +47,7 @@ services:
       - ./db:/var/lib/mysql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u vikunja --password=changeme"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u vikunja --password=$${MYSQL_PASSWORD}"]
       interval: 2s
       start_period: 30s
 
