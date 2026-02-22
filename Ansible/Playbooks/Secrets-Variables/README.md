@@ -43,9 +43,7 @@ cloudflare_api_token: "your_api_token"
 
 # SSH keys
 ssh_private_key: |
-  -----BEGIN OPENSSH PRIVATE KEY-----
-  ...
-  -----END OPENSSH PRIVATE KEY-----
+  <PASTE_YOUR_OPENSSH_PRIVATE_KEY_HERE>
 ```
 
 ### Edit Encrypted File
