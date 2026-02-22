@@ -31,6 +31,10 @@ A comprehensive, security-focused collection of 90+ self-hosted services for you
 - [ARCHITECTURE.md](ARCHITECTURE.md) - Network diagrams and layouts
 - [Community Examples](examples/) - Real homelab setups
 
+**Security governance**
+- [SECURITY.md](SECURITY.md) - Disclosure and response policy
+- [docs/SECURITY_RULEBOOK.md](docs/SECURITY_RULEBOOK.md) - Mandatory workflow and incident playbook
+
 <p align="center">
   <img src="assets/graphics/network-map.svg" alt="Homelab topology map" width="100%" />
 </p>
@@ -112,11 +116,20 @@ Before starting:
 
 This repository has been designed with security as the top priority:
 
-- No hardcoded secrets - All credentials externalized to `.env` files 
-- Pre-commit hooks - Prevent accidental secret commits 
-- Ansible Vault - Encrypted secrets for automation 
-- Template-based configs - Safe examples for all sensitive files 
-- Automated validation - Scripts to verify secure configuration 
+- No hardcoded secrets - All credentials externalized to `.env` files
+- Pre-commit hooks - Prevent accidental secret commits
+- Ansible Vault - Encrypted secrets for automation
+- Template-based configs - Safe examples for all sensitive files
+- Automated validation - Scripts to verify secure configuration
+
+### Required Security Gate (Before Push)
+
+```bash
+./scripts/validate-secrets.sh
+pre-commit run --all-files
+```
+
+If a secret leak is detected, stop and follow `docs/SECURITY_RULEBOOK.md` before pushing anything else.
 
 ## Quick Start
 
@@ -627,42 +640,42 @@ Here's how your homelab will be structured:
 
 ```
 
- INTERNET 
+ INTERNET
 
- 
- 
+
+
  Cloudflare CDN (Optional - For external access)
- - DDoS Protection 
- - SSL/TLS 
- 
- 
- 
- Your Router/ISP 
- Port 80 & 443 -> 
- 
- 
- 
- 
- 
- Pi-hole Traefik WireGuard 
- DNS Proxy VPN 
- Ad Block SSL Remote 
- 
- 
- 
- 
- 
- Authelia Services Services 
- 2FA Protected Public 
+ - DDoS Protection
+ - SSL/TLS
+
+
+
+ Your Router/ISP
+ Port 80 & 443 ->
+
+
+
+
+
+ Pi-hole Traefik WireGuard
+ DNS Proxy VPN
+ Ad Block SSL Remote
+
+
+
+
+
+ Authelia Services Services
+ 2FA Protected Public
  SSO by Auth No Auth Req
- 
- 
- 
- 
- 
+
+
+
+
+
  Jellyfin Nextcloud Gitea Vaultwarden
- Media Files Git Passwords 
- 
+ Media Files Git Passwords
+
 ```
 
 ### Traffic Flow Examples
@@ -688,19 +701,19 @@ Phone (Away) -> WireGuard VPN -> Home Network -> All Services
 
 ### General Questions
 
-**Q: Do I need a domain name?** 
+**Q: Do I need a domain name?**
 **A:** Not required, but highly recommended.
 - **With domain:** Proper SSL, external access, professional setup
 - **Without domain:** Local access only, self-signed certificates, `service.local` addresses
 - **Cost:** $10-15/year from Cloudflare, Namecheap, etc.
 
-**Q: Can I run this on a Raspberry Pi?** 
+**Q: Can I run this on a Raspberry Pi?**
 **A:** Yes! Perfect for learning.
 - **Good for:** Pi-hole, Traefik, Authelia, Vaultwarden, WireGuard, Watchtower
 - **Avoid:** Plex (use Jellyfin), heavy databases, AI services, 4K transcoding
 - **Tip:** Raspberry Pi 4 with 4GB+ RAM recommended
 
-**Q: How much does this cost monthly?** 
+**Q: How much does this cost monthly?**
 **A:** Very affordable!
 - **Electricity:** $5-30/month (depends on hardware)
 - **Domain:** $10-15/year (optional)
@@ -708,20 +721,20 @@ Phone (Away) -> WireGuard VPN -> Home Network -> All Services
 - **Cloud services:** $0 (that's the point!)
 - **Total:** ~$10-30/month, mostly electricity
 
-**Q: Is this legal?** 
+**Q: Is this legal?**
 **A:** Absolutely! Self-hosting is 100% legal.
 - **Legal:** Hosting your own services, media you own, personal use
 - **Check laws:** VPN usage varies by country, content downloading regulations
 - **Illegal:** Piracy, hosting copyrighted content without permission
 
-**Q: Can I access my homelab from the internet?** 
+**Q: Can I access my homelab from the internet?**
 **A:** Yes, but be smart about it!
 1. ** Best:** Use VPN (WireGuard/Headscale) - Most secure
 2. ** Good:** Reverse proxy + Cloudflare Tunnel - No port forwarding
 3. ** Okay:** Reverse proxy (Traefik) + Authelia - Requires port forwarding
 4. ** Never:** Direct port forwarding to services - Dangerous!
 
-**Q: How much time does maintenance take?** 
+**Q: How much time does maintenance take?**
 **A:** With automation, very little!
 - **Initial setup:** 2-4 hours per service (learning curve)
 - **Weekly:** 0-30 minutes (check dashboards)
@@ -732,7 +745,7 @@ Phone (Away) -> WireGuard VPN -> Home Network -> All Services
 
 ### Docker vs Kubernetes
 
-**Q: Should I use Docker Compose or Kubernetes?** 
+**Q: Should I use Docker Compose or Kubernetes?**
 **A:** For 95% of homelabs: **Docker Compose**
 
 | Use Case | Docker Compose | Kubernetes |
@@ -756,7 +769,7 @@ Phone (Away) -> WireGuard VPN -> Home Network -> All Services
 
 ### Ansible vs Terraform
 
-**Q: What's the difference between Ansible and Terraform?** 
+**Q: What's the difference between Ansible and Terraform?**
 **A:** Different tools for different jobs!
 
 | Tool | Purpose | Use When |
@@ -776,7 +789,7 @@ You don't need all three! Start with just Docker Compose.
 
 ### Troubleshooting
 
-**Q: My service won't start. What do I do?** 
+**Q: My service won't start. What do I do?**
 **A:** Checklist:
 
 ```
@@ -805,20 +818,20 @@ You don't need all three! Start with just Docker Compose.
  docker-compose down && docker-compose up -d
 ```
 
-**Q: I forgot my Authelia password!** 
+**Q: I forgot my Authelia password!**
 **A:** Edit `users_database.yml` and regenerate password hash:
 ```bash
 docker run authelia/authelia:latest authelia hash-password 'yourpassword'
 ```
 
-**Q: Traefik shows 404 error** 
+**Q: Traefik shows 404 error**
 **A:** Check:
 - Service is running: `docker ps`
 - Labels are correct in docker-compose.yml
 - DNS points to Traefik host
 - Traefik can reach the service network
 
-**Q: Can't access services externally** 
+**Q: Can't access services externally**
 **A:** Verify:
 - Router ports 80 & 443 forwarded to Traefik
 - Domain DNS points to your public IP
@@ -829,16 +842,16 @@ docker run authelia/authelia:latest authelia hash-password 'yourpassword'
 
 ### Data & Backups
 
-**Q: Where is my data stored?** 
+**Q: Where is my data stored?**
 **A:** In Docker volumes (usually `/var/lib/docker/volumes/`) or bind mounts specified in docker-compose.yml
 
-**Q: How do I backup my homelab?** 
+**Q: How do I backup my homelab?**
 **A:** Three-tier strategy:
 1. **Config files:** Git repository (this repo + your .env files encrypted)
 2. **Docker volumes:** restic/rClone to cloud storage
 3. **Important data:** Multiple locations (3-2-1 rule: 3 copies, 2 different media, 1 offsite)
 
-**Q: Can I move services to another machine?** 
+**Q: Can I move services to another machine?**
 **A:** Yes!
 1. Export docker volumes: `docker run --rm -v VOLUME:/data -v $(pwd):/backup alpine tar czf /backup/volume.tar.gz /data`
 2. Copy docker-compose.yml and .env
@@ -906,6 +919,7 @@ docker-compose up -d
 ## Documentation
 
 - [SECURITY.md](SECURITY.md) - Security best practices
+- [docs/SECURITY_RULEBOOK.md](docs/SECURITY_RULEBOOK.md) - Mandatory security workflow and incident handling
 - Service READMEs - Each service has detailed docs in its directory
 - Ansible Documentation - See `Ansible/` directories
 
@@ -966,7 +980,8 @@ Before contributing:
 1. Install pre-commit hooks: `pre-commit install`
 2. Never commit real secrets
 3. Use `.example` files for sensitive configs
-4. Test changes in a dev environment
+4. Review `docs/SECURITY_RULEBOOK.md` for security-sensitive changes
+5. Test changes in a dev environment
 
 ## Important Notes
 
@@ -992,4 +1007,4 @@ This repository aggregates configurations for various open-source projects. Cred
 
 ---
 
-**Remember:** Security is a journey, not a destination. Keep your secrets secret! 
+**Remember:** Security is a journey, not a destination. Keep your secrets secret!

@@ -1,56 +1,58 @@
-# Security Best Practices
+# Security Policy
 
-## Overview
-This repository has been designed with security-first principles. All sensitive credentials are externalized and never committed to version control.
+## Supported Versions
 
-## Secret Management Strategy
+Security fixes target the latest state of `main`.
 
-### 1. Environment Variables (.env files)
-- Each service uses a `.env` file for secrets (gitignored)
-- `.env.example` templates are provided for each service
-- Never commit actual `.env` files
+## Rulebook
 
-### 2. Ansible Vault
-- All Ansible secrets use `ansible-vault` encryption
-- Vault password stored separately (never in repo)
-- Example: `ansible-vault create secrets.yml`
+The authoritative operating rules and incident playbook live in:
 
-### 3. Secret Generation
-- Use provided `scripts/generate-secrets.sh` for creating secure random secrets
-- Minimum secret length: 32 characters for tokens/keys
-- Use bcrypt/argon2 for password hashing
+- `docs/SECURITY_RULEBOOK.md`
 
-## Setup Instructions
-
-### Initial Setup
-```bash
-# 1. Copy all .env.example files to .env
-find . -name ".env.example" -exec sh -c 'cp "$1" "${1%.example}"' _ {} \;
-
-# 2. Generate secure secrets
-./scripts/generate-secrets.sh
-
-# 3. Update .env files with your actual values
-# 4. Never commit .env files
-```
-
-### Pre-commit Hooks
-```bash
-# Install pre-commit hooks to prevent secret leaks
-pre-commit install
-```
-
-## What NOT to Commit
-- `.env` files
-- `*password*`, `*secret*`, `*token*` files (unless examples)
-- API keys, certificates, private keys
-- User databases with real credentials
-- Configuration files with embedded secrets
-
-## Secret Rotation
-- Rotate secrets every 90 days minimum
-- Use `scripts/rotate-secrets.sh` helper
-- Update all dependent services
+All contributors are expected to follow that document for day-to-day security workflow and incident handling.
 
 ## Reporting Security Issues
-Please report security vulnerabilities to [your-email]
+
+Do not open public issues for sensitive vulnerabilities.
+
+Use one of:
+
+- GitHub Security Advisory (preferred)
+- Maintainer private contact channel
+
+Include:
+
+- Vulnerability description
+- Reproduction steps
+- Impact assessment
+- Suggested remediation (if available)
+
+## Secret Leakage Procedure (Mandatory)
+
+If a secret is exposed:
+
+1. Revoke or rotate immediately.
+2. Remove leaked content from the current branch.
+3. If history is affected, rewrite history and force-push rewritten refs.
+4. Notify collaborators to re-clone or hard reset.
+5. Re-run checks:
+   - `./scripts/validate-secrets.sh`
+   - `pre-commit run --all-files`
+
+Use `docs/SECURITY_RULEBOOK.md` for exact command-level incident steps.
+
+## Security Tooling
+
+Baseline checks:
+
+- `scripts/validate-secrets.sh`
+- pre-commit hooks from `.pre-commit-config.yaml`
+- CI workflow: `.github/workflows/security-scan.yml`
+
+## Secret Management Baseline
+
+- Keep secrets in local `.env` files only (gitignored).
+- Track only `*.example` templates.
+- Use `scripts/generate-secrets.sh` and `scripts/rotate-secrets.sh` for lifecycle management.
+- Use Ansible Vault for encrypted automation secrets.

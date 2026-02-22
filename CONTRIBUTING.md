@@ -10,6 +10,7 @@ Before contributing, ensure:
 - Pre-commit hooks are installed: `pre-commit install`
 - All sensitive data uses `.env` files or Ansible Vault
 - Example files use `CHANGE_ME` placeholders
+- `docs/SECURITY_RULEBOOK.md` is followed for incident handling and pre-push security workflow
 
 ## 📋 Contribution Checklist
 
@@ -21,6 +22,7 @@ Before contributing, ensure:
 - [ ] Security best practices followed
 - [ ] Tested in development environment
 - [ ] Documentation updated
+- [ ] `docs/SECURITY_RULEBOOK.md` reviewed if security-sensitive files changed
 
 ## 🎯 What to Contribute
 
@@ -61,7 +63,7 @@ Before contributing, ensure:
    ```bash
    # Validate configuration
    ./scripts/validate-secrets.sh
-   
+
    # Test docker-compose
    docker-compose config
    docker-compose up -d
@@ -69,6 +71,7 @@ Before contributing, ensure:
 
 5. **Run pre-commit checks**
    ```bash
+   ./scripts/validate-secrets.sh
    pre-commit run --all-files
    ```
 
@@ -176,6 +179,9 @@ Before submitting:
 # Validate secrets
 ./scripts/validate-secrets.sh
 
+# Security checks
+pre-commit run --all-files
+
 # Test compose file
 cd YourService
 docker-compose config
@@ -210,6 +216,7 @@ Good documentation includes:
 - ❌ Use hardcoded secrets
 - ❌ Commit without testing
 - ❌ Skip pre-commit hooks
+- ❌ Skip `docs/SECURITY_RULEBOOK.md` incident workflow after a leak
 - ❌ Use absolute paths (use relative or env vars)
 - ❌ Commit large binary files
 
