@@ -204,9 +204,9 @@ Priority order:
 ### Before (Insecure) ❌
 ```yaml
 # configuration.yml
-jwt_secret: REDACTED_OLD_SECRET
+jwt_secret: <redacted-old-secret>
 session:
-  secret: sVmXNPbuVmVgaQ6Bqu3BPyJmP9isqdWy...
+  secret: <redacted-old-secret>
 ```
 
 ### After (Secure) ✅

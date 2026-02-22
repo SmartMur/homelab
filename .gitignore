@@ -16,6 +16,8 @@
 **/access_token
 **/cf-token
 **/api-token
+**/cloudflare.ini
+!**/cloudflare.ini.example
 **/credentials.yaml
 !**/credentials.yaml.example
 **/users_database.yml

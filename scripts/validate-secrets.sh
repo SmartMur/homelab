@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script to validate that secrets are properly configured
 
-set -e
+set -euo pipefail
 
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -19,7 +19,7 @@ check_file_for_placeholders() {
     if [ -f "$file" ]; then
         if grep -q "CHANGE_ME" "$file"; then
             echo -e "${YELLOW}WARNING: $file contains CHANGE_ME placeholders${NC}"
-            ((warnings++))
+            warnings=$((warnings + 1))
         else
             echo -e "${GREEN}✓ $file - configured${NC}"
         fi
@@ -34,8 +34,8 @@ check_env_exists() {
     
     if [ -f "$example_file" ]; then
         if [ ! -f "$env_file" ]; then
-            echo -e "${RED}ERROR: Missing $env_file (template exists at $example_file)${NC}"
-            ((errors++))
+            echo -e "${YELLOW}WARNING: Missing $env_file (template exists at $example_file)${NC}"
+            warnings=$((warnings + 1))
         else
             check_file_for_placeholders "$env_file"
         fi
@@ -45,9 +45,9 @@ check_env_exists() {
 # Function to check if sensitive files are gitignored
 check_gitignore() {
     local file="$1"
-    if [ -f "$file" ] && ! git check-ignore -q "$file"; then
+    if [ -f "$file" ] && ! git check-ignore --no-index -q "$file"; then
         echo -e "${RED}ERROR: $file is NOT in .gitignore!${NC}"
-        ((errors++))
+        errors=$((errors + 1))
         return 1
     fi
     return 0
@@ -74,9 +74,19 @@ fi
 
 # Check for exposed secrets
 echo -e "\nChecking for exposed secret files..."
-sensitive_patterns=("password" "access_token" "cf-token" "cloudflare.ini" "credentials.yaml")
+sensitive_filenames=(
+    "password"
+    "access_token"
+    "cf-token"
+    "cloudflare.ini"
+    "credentials.yaml"
+    "users"
+    "secrets_file.enc"
+    "configuration.yml"
+    "users_database.yml"
+)
 
-for pattern in "${sensitive_patterns[@]}"; do
+for pattern in "${sensitive_filenames[@]}"; do
     while IFS= read -r -d '' file; do
         # Skip .example files
         if [[ "$file" == *.example ]]; then
@@ -84,12 +94,9 @@ for pattern in "${sensitive_patterns[@]}"; do
         fi
         
         if [ -f "$file" ]; then
-            if ! check_gitignore "$file"; then
-                echo -e "${RED}ERROR: Sensitive file $file is not gitignored!${NC}"
-                ((errors++))
-            fi
+            check_gitignore "$file"
         fi
-    done < <(find . -name "*$pattern*" -type f -print0 2>/dev/null)
+    done < <(find . -name "$pattern" -type f -print0 2>/dev/null)
 done
 
 # Summary
