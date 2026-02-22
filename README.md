@@ -34,6 +34,7 @@ A comprehensive, security-focused collection of 90+ self-hosted services for you
 **Security governance**
 - [SECURITY.md](SECURITY.md) - Disclosure and response policy
 - [docs/SECURITY_RULEBOOK.md](docs/SECURITY_RULEBOOK.md) - Mandatory workflow and incident playbook
+- `.github/workflows/dependabot-automerge.yml` - Auto-approve and auto-merge Dependabot PRs
 
 <p align="center">
   <img src="assets/graphics/network-map.svg" alt="Homelab topology map" width="100%" />
