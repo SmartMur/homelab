@@ -1,0 +1,48 @@
+# Gitleaks configuration for homelab
+# This repo contains example/template configs with placeholder credentials.
+# All values are well-known defaults (e.g. "root_pass", "CHANGE_ME", "testtest")
+# and are NOT real secrets.
+
+title = "homelab gitleaks config"
+
+[allowlist]
+  description = "Allowlist for example configs and templates with placeholder secrets"
+  paths = [
+    '''Ente/''',
+    '''Frigate/docker-compose\.yaml''',
+    '''Guacamole/docker-compose\.yaml''',
+    '''Homepage/Homepage/services\.yaml''',
+    '''Kubernetes/GitOps/Grafana/values\.yaml''',
+    '''Kubernetes/Traefik-External-Service/ingress\.yaml''',
+    '''Kubernetes/Traefik-PiHole/''',
+    '''Kubernetes/Create-manifest-helm/''',
+    '''Kubernetes/Longhorn/longhorn\.yaml''',
+    '''Kubernetes/GitOps/Gotify/ingress\.yaml''',
+    '''Kubernetes/Traefik-PiHole/Manifest/PiHole/ingress\.yaml''',
+    '''MacWindows/Windows/docker-compose\.yaml''',
+    '''Netbird/''',
+    '''Paperless-ngx/docker-compose\.yaml''',
+    '''Unifi-Controller/''',
+    '''UptimeKuma/Kubernetes/ingress\.yaml''',
+    '''Zitadel/''',
+    '''Home-Assistant/Kubernetes/''',
+    '''Jellyfin/Kubernetes/ingress\.yaml''',
+    '''Piholev6/docker-compose\.yaml''',
+    '''Pihole/''',
+    '''Proxmox-NAS/config\.yml''',
+    '''UltimateVPS/docker-compose-VPS\.yaml''',
+    '''Popup-Homelab/docker-compose\.yaml''',
+    '''Postiz/docker-compose\.yaml''',
+    '''Pterodactyl/docker-compose\.yaml''',
+    '''Unbound/''',
+    '''Vaultwarden/Kubernetes/ingress\.yaml''',
+    '''Wireguard/Kubernetes/ingress\.yaml''',
+    '''Plex/Kubernetes/ingress\.yaml''',
+    '''SearXNG/settings\.yaml''',
+    '''Synapse/mautrix-discord-bridge/example-config\.yaml''',
+    '''Terraform/main\.tf''',
+    '''NordVPN-Wireguard/wireguard\.ps1''',
+    '''Crowdsec/docker-compose\.yml''',
+    '''restic/docker-compose\.yml''',
+    '''scripts/init-homelab\.sh''',
+  ]
