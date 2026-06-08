@@ -104,15 +104,3 @@ jobs:
           else
             echo "✅ No CHANGE_ME in committed files"
           fi
-
-  dependabot-auto-approve:
-    name: Auto-approve Dependabot PRs
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]'
-    steps:
-      - name: Approve Dependabot PR
-        run: |
-          gh pr review --approve "$PR_URL"
-        env:
-          PR_URL: ${{ github.event.pull_request.html_url }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
