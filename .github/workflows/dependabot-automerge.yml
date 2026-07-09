@@ -45,16 +45,6 @@ jobs:
             --method PUT \
             "$pr_api" || true
 
-      - name: Approve Dependabot PR
-        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          PR_URL: ${{ github.event.pull_request.html_url }}
-        run: |
-          gh pr review "$PR_URL" \
-            --approve \
-            --body "Auto-approved dependency update."
-
       - name: Enable auto-merge
         if: steps.metadata.outputs.update-type != 'version-update:semver-major'
         env:
